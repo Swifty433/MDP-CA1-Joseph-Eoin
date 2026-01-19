@@ -3,21 +3,29 @@
 
 struct AircraftMover
 {
-    AircraftMover(float vx, float vy) : velocity(vx, vy) {}
-    void operator()(Aircraft& aircraft, sf::Time) const
+    //Changed movement using acceleration instead of a set speed.
+    // Only worrying about the x axis
+    AircraftMover(float ax)
+        : m_acceleration(ax)
+    { }
+    //based on how much time has passed speed up. 
+    void operator()(Aircraft& aircraft, sf::Time dt) const
     {
-        aircraft.Accelerate(velocity);
+        aircraft.Accelerate(sf::Vector2f(
+            m_acceleration * dt.asSeconds(), 0.f
+        ));
     }
 
-    sf::Vector2f velocity;
+    float m_acceleration;
 };
 
 Player::Player()
 {
     m_key_binding[sf::Keyboard::Scancode::A] = Action::kMoveLeft;
     m_key_binding[sf::Keyboard::Scancode::D] = Action::kMoveRight;
-    m_key_binding[sf::Keyboard::Scancode::W] = Action::kMoveUp;
-    m_key_binding[sf::Keyboard::Scancode::S] = Action::kMoveDown;
+    //No need for up and down movement so I commented it out for now.
+    //m_key_binding[sf::Keyboard::Scancode::W] = Action::kMoveUp;
+    //m_key_binding[sf::Keyboard::Scancode::S] = Action::kMoveDown;
     m_key_binding[sf::Keyboard::Scancode::Space] = Action::kBulletFire;
     m_key_binding[sf::Keyboard::Scancode::M] = Action::kMissileFire;
 
@@ -94,11 +102,19 @@ MissionStatus Player::GetMissionStatus() const
 
 void Player::InitialiseActions()
 {
-    const float kPlayerSpeed = 200.f;
-    m_action_binding[Action::kMoveLeft].action = DerivedAction<Aircraft>(AircraftMover(-kPlayerSpeed, 0.f));
-    m_action_binding[Action::kMoveRight].action = DerivedAction<Aircraft>(AircraftMover(kPlayerSpeed, 0.f));
-    m_action_binding[Action::kMoveUp].action = DerivedAction<Aircraft>(AircraftMover(0.f, -kPlayerSpeed));
-    m_action_binding[Action::kMoveDown].action = DerivedAction<Aircraft>(AircraftMover(0.f, kPlayerSpeed));
+    //players accel
+    const float kPlayerAcceleration = 300.f;
+    //Using negative since its backwards to accel left
+    m_action_binding[Action::kMoveLeft].action = 
+        DerivedAction<Aircraft>(AircraftMover(-kPlayerAcceleration));
+
+    //Using positive to accel right
+    m_action_binding[Action::kMoveRight].action =
+        DerivedAction<Aircraft>(AircraftMover(kPlayerAcceleration));
+
+    
+
+    //Shooting mechanics
     m_action_binding[Action::kBulletFire].action = DerivedAction<Aircraft>([](Aircraft& a, sf::Time dt)
         {
             a.Fire();

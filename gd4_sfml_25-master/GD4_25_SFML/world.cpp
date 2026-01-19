@@ -26,9 +26,9 @@ World::World(sf::RenderWindow& window, FontHolder& font)
 void World::Update(sf::Time dt)
 {
 	//Scroll the world
-	m_camera.move(sf::Vector2f(0, m_scroll_speed * dt.asSeconds()));
+	//m_camera.move(sf::Vector2f(0, m_scroll_speed * dt.asSeconds()));
 
-	m_player_aircraft->SetVelocity(0.f, 0.f);
+	//m_player_aircraft->SetVelocity(0.f, 0.f);
 
 	DestroyEntitiesOutsideView();
 	GuideMissiles();
@@ -122,7 +122,7 @@ void World::BuildScene()
 	std::unique_ptr<Aircraft> leader(new Aircraft(AircraftType::kEagle, m_textures, m_fonts));
 	m_player_aircraft = leader.get();
 	m_player_aircraft->setPosition(m_spawn_position);
-	m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
+	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader));
 
 	/*std::unique_ptr<Aircraft> left_escort(new Aircraft(AircraftType::kRaptor, m_textures, m_fonts));
@@ -146,7 +146,7 @@ void World::AdaptPlayerVelocity()
 		m_player_aircraft->SetVelocity(velocity / std::sqrt(2.f));
 	}
 	//Add scrolling velocity
-	m_player_aircraft->Accelerate(0.f, m_scroll_speed);
+	//m_player_aircraft->Accelerate(0.f, m_scroll_speed);
 }
 
 void World::AdaptPlayerPosition()
