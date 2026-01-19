@@ -84,6 +84,11 @@ void gui::Button::HandleEvent(const sf::Event& event)
 {
 }
 
+sf::FloatRect gui::Button::getLocalBounds() const
+{
+    return m_sprite.getLocalBounds();
+}
+
 void gui::Button::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();

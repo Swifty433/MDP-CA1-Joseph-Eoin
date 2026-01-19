@@ -42,8 +42,54 @@ void gui::Container::HandleEvent(const sf::Event& event)
                 m_children[m_selected_child]->Activate();
             }
         }
-
     }
+
+    const auto* mouse_moved = event.getIf<sf::Event::MouseMoved>();
+    if (mouse_moved)
+    {
+        sf::Vector2f mouse_pos(mouse_moved->position.x, mouse_moved->position.y);
+
+        for (std::size_t i = 0; i < m_children.size(); ++i)
+        {
+            if (m_children[i]->IsSelectable())
+            {
+                sf::FloatRect bounds = m_children[i]->getTransform().transformRect(
+                    m_children[i]->getLocalBounds());
+
+                if (bounds.contains(mouse_pos))
+                {
+                    Select(i);
+                    break;
+                }
+            }
+        }
+    }
+
+	const auto* mouse_button_released = event.getIf<sf::Event::MouseButtonReleased>();
+    if (mouse_button_released && mouse_button_released->button == sf::Mouse::Button::Left)
+    {
+        sf::Vector2f mouse_pos(mouse_button_released->position.x, mouse_button_released->position.y);
+
+        for (std::size_t i = 0; i < m_children.size(); ++i)
+        {
+            if (m_children[i]->IsSelectable())
+            {
+                sf::FloatRect bounds = m_children[i]->getTransform().transformRect
+                    (m_children[i]->getLocalBounds());
+                if (bounds.contains(mouse_pos))
+                {
+                    Select(i);
+                    m_children[i]->Activate();
+                    break;
+                }
+            }
+		}
+    }
+}
+
+sf::FloatRect gui::Container::getLocalBounds() const
+{
+    return sf::FloatRect();
 }
 
 void gui::Container::draw(sf::RenderTarget& target, sf::RenderStates states) const

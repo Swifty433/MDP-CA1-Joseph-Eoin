@@ -15,6 +15,8 @@ namespace gui
 		void SetText(const std::string& text);
 		void HandleEvent(const sf::Event& event) override;
 
+		virtual sf::FloatRect getLocalBounds() const override;
+
 	private:
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 

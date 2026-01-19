@@ -21,6 +21,11 @@ void gui::Label::HandleEvent(const sf::Event& event)
 {
 }
 
+sf::FloatRect gui::Label::getLocalBounds() const
+{
+    return m_text.getLocalBounds();
+}
+
 void gui::Label::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();

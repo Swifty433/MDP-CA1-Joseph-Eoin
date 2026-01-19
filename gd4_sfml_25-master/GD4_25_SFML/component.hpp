@@ -21,6 +21,8 @@ namespace gui
 
 		virtual void HandleEvent(const sf::Event& event) = 0;
 
+		virtual sf::FloatRect getLocalBounds() const = 0;
+
 	private:
 		bool m_is_selected;
 		bool m_is_active;
