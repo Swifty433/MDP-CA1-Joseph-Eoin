@@ -32,9 +32,18 @@ MenuState::MenuState(StateStack& stack, Context context) : State(stack, context)
             RequestStackPop();
         });
 
+	auto howto_button = std::make_shared<gui::Button>(*context.fonts, *context.textures);
+	howto_button->setPosition(sf::Vector2f(100, 400));
+	howto_button->SetText("How To Play");
+	howto_button->SetCallback([this]()
+		{
+			RequestStackPush(StateID::kHowTo);
+		});
+
     m_gui_container.Pack(play_button);
     m_gui_container.Pack(settings_button);
     m_gui_container.Pack(exit_button);
+	m_gui_container.Pack(howto_button); 
 }
 
 void MenuState::Draw()
