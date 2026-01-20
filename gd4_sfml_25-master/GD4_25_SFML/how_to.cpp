@@ -11,11 +11,17 @@ HowToState::HowToState(StateStack& stack, Context context)
 	m_title_text.setString("How To Play");
 	m_title_text.setCharacterSize(70);
 	Utility::CentreOrigin(m_title_text);
-	m_title_text.setPosition(sf::Vector2f(512.f, 100.f));
+	m_title_text.setPosition(sf::Vector2f(512.f, 200.f));
 
 	std::string info = "HOW TO PLAY!";
 	info += "\n\n- Use the arrow keys to move your character.";
 
+	auto back_button = std::make_shared<gui::Button>(*context.fonts, *context.textures);
+	back_button->setPosition(sf::Vector2f(500.f, 500.f));
+	back_button->SetCallback(std::bind(&HowToState::RequestStackPop, this));
+	back_button->SetText("Back to Menu");
+	m_gui_container.Pack(back_button);
+	//Utility::CentreOrigin(*back_button);
 }
 
 void HowToState::Draw()
