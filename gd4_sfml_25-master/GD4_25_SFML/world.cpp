@@ -38,6 +38,38 @@ void World::Update(sf::Time dt)
 	{
 		m_scene_graph.OnCommand(m_command_queue.Pop(), dt);
 	}
+
+	//Friction Slowing down the player constantly
+	const float kPLayerFriction = 100.f;
+
+	//Current speed
+	sf::Vector2f playerVelocity = m_player_aircraft->GetVelocity();
+
+	//Based on direction subtract or add speed
+	//Right subtract
+	if (playerVelocity.x > 0.f)
+	{
+		playerVelocity.x -= kPLayerFriction * dt.asSeconds();
+		//setting to 0 if the speed goes past it
+		if (playerVelocity.x < 0.f)
+		{
+			playerVelocity.x = 0.f;
+		}
+	}
+	//moving left add
+	else if (playerVelocity.x < 0.f)
+	{
+		playerVelocity.x += kPLayerFriction * dt.asSeconds();
+		//setting to 0 if the speed goes past it
+		if (playerVelocity.x > 0.f)
+		{
+			playerVelocity.x = 0.f;
+		}
+	}
+
+	//set the new speed
+	m_player_aircraft->SetVelocity(playerVelocity);
+
 	AdaptPlayerVelocity();
 
 	HandleCollisions();
@@ -155,12 +187,40 @@ void World::AdaptPlayerPosition()
 	sf::FloatRect view_bounds(m_camera.getCenter() - m_camera.getSize() / 2.f, m_camera.getSize());
 	const float border_distance = 40.f;
 
-	sf::Vector2f position = m_player_aircraft->getPosition();
+	//saving the oldposition to check if wall collision ever occured
+	sf::Vector2f oldposition = m_player_aircraft->getPosition();
+	sf::Vector2f position = oldposition;
+
+
 	position.x = std::min(position.x, view_bounds.size.x - border_distance);
 	position.x = std::max(position.x, border_distance);
 	position.y = std::min(position.y, view_bounds.position.y + view_bounds.size.y - border_distance);
 	position.y = std::max(position.y, view_bounds.position.y + border_distance);
 	m_player_aircraft->setPosition(position);
+
+	//WALL BOUNCE MECHANIC
+
+	//Checking if the player was snapped back due to colliding with a wall by comparing the positions before and after
+	if (oldposition.x != position.x)
+	{
+		//knockback speed value
+		const float knockbackVelocity = 500.f;
+
+		//Get current velocity
+		sf::Vector2f velocity = m_player_aircraft->GetVelocity();
+		//based on velocity to see which wall the player hit into then boost the speed in the opposite direction
+		if (velocity.x < 0.f)
+		{
+			velocity.x = knockbackVelocity;
+		}
+		else if (velocity.x > 0.f)
+		{
+			velocity.x = -knockbackVelocity;
+		}
+		//setting velocity
+		m_player_aircraft->SetVelocity(velocity);
+
+	}
 
 }
 
