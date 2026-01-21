@@ -9,7 +9,7 @@
 #include "game_over_state.hpp"
 #include "how_to.hpp"
 
-Application::Application() : m_window(sf::VideoMode({ 1024, 768 }), "States", sf::Style::Close), m_stack(State::Context(m_window, m_textures, m_fonts, m_player))
+Application::Application() : m_window(sf::VideoMode({ 1024, 768 }), "States", sf::Style::Close), m_stack(State::Context(m_window, m_textures, m_fonts, m_player, m_player_2))
 {
 	m_window.setKeyRepeatEnabled(false);
 	m_fonts.Load(FontID::kMain, "Media/Fonts/Sansation.ttf");

@@ -14,13 +14,16 @@ World::World(sf::RenderWindow& window, FontHolder& font)
 	, m_scene_graph(ReceiverCategories::kNone)
 	, m_scene_layers()
 	, m_world_bounds(sf::Vector2f(0.f, 0.f), sf::Vector2f(m_camera.getSize().x, 3000.f))
-	, m_spawn_position(m_camera.getSize().x / 2.f, m_world_bounds.size.y - m_camera.getSize().y/2.f)
+	, m_spawn_position(m_camera.getSize().x / 2.f, m_world_bounds.size.y - m_camera.getSize().y/0.5f)
+	, m_spawn_position_2(m_camera.getSize().x / 2.f, m_world_bounds.size.y - m_camera.getSize().y / 9.f)
 	, m_scroll_speed(-100.f)
 	, m_player_aircraft(nullptr)
+	, m_player_aircraft_2(nullptr)
 {
 	LoadTextures();
 	BuildScene();
-	m_camera.setCenter(m_spawn_position);
+	sf::Vector2f camera_center = sf::Vector2f(m_camera.getSize().x / 2.f, m_world_bounds.size.y - m_camera.getSize().y / 2.f);
+	m_camera.setCenter(camera_center);
 }
 
 void World::Update(sf::Time dt)
@@ -156,6 +159,13 @@ void World::BuildScene()
 	m_player_aircraft->setPosition(m_spawn_position);
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader));
+
+	
+	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kEagle, m_textures, m_fonts));
+	m_player_aircraft_2 = leader_2.get();
+	m_player_aircraft_2->setPosition(m_spawn_position_2);
+	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
+	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader_2));
 
 	/*std::unique_ptr<Aircraft> left_escort(new Aircraft(AircraftType::kRaptor, m_textures, m_fonts));
 	left_escort->setPosition(sf::Vector2f(- 80.f, 50.f));
