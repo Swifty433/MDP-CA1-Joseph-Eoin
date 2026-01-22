@@ -127,7 +127,7 @@ void SceneNode::DrawChildren(sf::RenderTarget& target, sf::RenderStates states) 
 
 unsigned int SceneNode::GetCategory() const
 {
-	return static_cast<unsigned int>(ReceiverCategories::kScene);
+	return static_cast<unsigned int>(m_default_category);
 }
 
 void SceneNode::CheckNodeCollision(SceneNode& node, std::set<Pair>& collision_pairs)
