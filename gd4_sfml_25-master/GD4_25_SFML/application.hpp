@@ -5,6 +5,8 @@
 #include "resource_holder.hpp"
 #include "resource_identifiers.hpp"
 #include "statestack.hpp"
+#include "audio_manager.hpp"
+
 class Application
 {
 public:
@@ -24,6 +26,7 @@ private:
 
 	TextureHolder m_textures;
 	FontHolder m_fonts;
+	Audio_Manager m_audio;
 
 	StateStack m_stack;
 };

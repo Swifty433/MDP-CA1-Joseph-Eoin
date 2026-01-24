@@ -4,6 +4,7 @@
 
 TitleState::TitleState(StateStack& stack, Context context) : State(stack, context), m_show_text(true), m_text_effect_time(sf::Time::Zero), m_background_sprite(context.textures->Get(TextureID::kTitleScreen)), m_text(context.fonts->Get(FontID::kMain))
 {
+	context.audio->play_music(Music::kMenuMusic);
     m_text.setString("Press any button to continue");
     Utility::CentreOrigin(m_text);
     m_text.setPosition(context.window->getView().getSize() / 2.f);

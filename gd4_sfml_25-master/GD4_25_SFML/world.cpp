@@ -111,9 +111,9 @@ bool World::HasPlayerReachedEnd() const
 
 void World::LoadTextures()
 {
-	m_textures.Load(TextureID::kEagle, "Media/Textures/Eagle.png");
+	m_textures.Load(TextureID::kEagle, "Media/Textures/ShipAlt.png");
 	m_textures.Load(TextureID::kRaptor, "Media/Textures/Raptor.png");
-	m_textures.Load(TextureID::kLandscape, "Media/Textures/Desert.png");
+	m_textures.Load(TextureID::kLandscape, "Media/Textures/Background.png");
 	m_textures.Load(TextureID::kBullet, "Media/Textures/Bullet.png");
 	m_textures.Load(TextureID::kMissile, "Media/Textures/Missile.png");
 
