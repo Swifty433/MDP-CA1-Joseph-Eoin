@@ -4,6 +4,7 @@
 #include "player.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "stateid.hpp"
+#include "audio_manager.hpp"
 
 class StateStack;
 
@@ -15,13 +16,14 @@ public:
 
 	struct Context
 	{
-		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, Player& player_2);
+		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, Player& player_2, Audio_Manager& audio);
 		//TODO unique_ptr rather than raw pointers here?
 		sf::RenderWindow* window;
 		TextureHolder* textures;
 		FontHolder* fonts;
 		Player* player;
 		Player* player_2;
+		Audio_Manager* audio;
 	};
 
 public:
