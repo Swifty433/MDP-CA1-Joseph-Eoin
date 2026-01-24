@@ -1,5 +1,6 @@
 #include "player.hpp"
 #include "aircraft.hpp"
+#include <iostream>
 
 struct AircraftMover
 {
@@ -44,10 +45,16 @@ Player::Player(int player_num)
     }
 
     InitialiseActions();
+   
+    const unsigned int myCategory =
+        (m_player_number == 1)
+        ? static_cast<unsigned int>(ReceiverCategories::kPlayer1Aircraft)
+        : static_cast<unsigned int>(ReceiverCategories::kPlayer2Aircraft);
+
 
     for (auto& pair : m_action_binding)
     {
-        pair.second.category = static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft);
+        pair.second.category = myCategory;
     }
 }
 
@@ -122,9 +129,17 @@ void Player::InitialiseActions()
     m_action_binding[Action::kMoveLeft].action = 
         DerivedAction<Aircraft>(AircraftMover(-kPlayerAcceleration));
 
+    m_action_binding[Action::kMoveLeftPlayer2].action =
+        DerivedAction<Aircraft>(AircraftMover(-kPlayerAcceleration));
+
     //Using positive to accel right
     m_action_binding[Action::kMoveRight].action =
         DerivedAction<Aircraft>(AircraftMover(kPlayerAcceleration));
+
+    m_action_binding[Action::kMoveRightPlayer2].action =
+        DerivedAction<Aircraft>(AircraftMover(kPlayerAcceleration));
+
+
 
     
 
@@ -148,6 +163,8 @@ bool Player::IsRealTimeAction(Action action)
     {
     case Action::kMoveLeft:
     case Action::kMoveRight:
+    case Action::kMoveLeftPlayer2:
+    case Action::kMoveRightPlayer2:
     case Action::kMoveUp:
     case Action::kMoveDown:
     case Action::kBulletFire:

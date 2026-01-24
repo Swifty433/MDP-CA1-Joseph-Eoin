@@ -9,8 +9,10 @@
 class Aircraft : public Entity
 {
 public:
+	void SetPlayerid(int id);
 	Aircraft(AircraftType type, const TextureHolder& textures, const FontHolder& fonts);
 	unsigned int GetCategory() const override;
+	int m_player_id = 0;
 
 	void IncreaseFireRate();
 	void IncreaseFireSpread();

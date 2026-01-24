@@ -84,7 +84,15 @@ unsigned int Aircraft::GetCategory() const
 {
 	if (IsAllied())
 	{
-		return static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft);
+		if (m_player_id == 1)
+		{
+			return static_cast<unsigned int>(ReceiverCategories::kPlayer1Aircraft);
+		}
+		if (m_player_id == 2)
+		{
+			return static_cast<unsigned int>(ReceiverCategories::kPlayer2Aircraft);
+		}
+		return static_cast<unsigned int>(ReceiverCategories::kAlliedAircraft);
 	}
 	return static_cast<unsigned int>(ReceiverCategories::kEnemyAircraft);
 }
@@ -291,4 +299,9 @@ void Aircraft::CheckPickupDrop(CommandQueue& commands)
 	{
 		commands.Push(m_drop_pickup_command);
 	}
+}
+
+void Aircraft::SetPlayerid(int id)
+{
+	m_player_id = id;
 }

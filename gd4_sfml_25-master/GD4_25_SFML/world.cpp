@@ -37,9 +37,13 @@ void World::Update(sf::Time dt)
 	GuideMissiles();
 
 	//Process commands from the scenegraph
-	while (!m_command_queue.IsEmpty())
+	while (!m_command_queue_p1.IsEmpty())
 	{
-		m_scene_graph.OnCommand(m_command_queue.Pop(), dt);
+		m_scene_graph.OnCommand(m_command_queue_p1.Pop(), dt);
+	}
+	while (!m_command_queue_p2.IsEmpty())
+	{
+		m_scene_graph.OnCommand(m_command_queue_p2.Pop(), dt);
 	}
 
 	//Friction Slowing down the player constantly
@@ -80,7 +84,7 @@ void World::Update(sf::Time dt)
 
 	SpawnEnemies();
 
-	m_scene_graph.Update(dt, m_command_queue);
+	m_scene_graph.Update(dt, m_command_queue_p1);
 	AdaptPlayerPosition();
 }
 
@@ -94,9 +98,14 @@ void World::Draw()
 
 
 
-CommandQueue& World::GetCommandQueue()
+CommandQueue& World::GetCommandQueueP1()
 {
-	return m_command_queue;
+	return m_command_queue_p1;
+}
+
+CommandQueue& World::GetCommandQueueP2()
+{
+	return m_command_queue_p2;
 }
 
 bool World::HasAlivePlayer() const
@@ -157,6 +166,7 @@ void World::BuildScene()
 	std::unique_ptr<Aircraft> leader(new Aircraft(AircraftType::kEagle, m_textures, m_fonts));
 	m_player_aircraft = leader.get();
 	m_player_aircraft->setPosition(m_spawn_position);
+	m_player_aircraft->SetPlayerid(1);
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader));
 
@@ -164,6 +174,7 @@ void World::BuildScene()
 	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kEagle, m_textures, m_fonts));
 	m_player_aircraft_2 = leader_2.get();
 	m_player_aircraft_2->setPosition(m_spawn_position_2);
+	m_player_aircraft_2->SetPlayerid(2);
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader_2));
 
@@ -324,8 +335,8 @@ void World::GuideMissiles()
 				missile.GuideTowards(closest_enemy->GetWorldPosition());
 			}
 		});
-	m_command_queue.Push(enemyCollector);
-	m_command_queue.Push(missileGuider);
+	m_command_queue_p1.Push(enemyCollector);
+	m_command_queue_p1.Push(missileGuider);
 	m_active_enemies.clear();
 }
 
@@ -396,7 +407,7 @@ void World::DestroyEntitiesOutsideView()
 			e.Destroy();
 		}
 	});
-	m_command_queue.Push(command);
+	m_command_queue_p1.Push(command);
 
 }
 
