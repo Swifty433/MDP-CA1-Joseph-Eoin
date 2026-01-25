@@ -9,11 +9,13 @@ std::vector<AircraftData> InitializeAircraftData()
 {
 	std::vector<AircraftData> data(static_cast<int>(AircraftType::kAircraftCount));
 
+	//Player 1 Aircraft
 	data[static_cast<int>(AircraftType::kEagle)].m_hitpoints = 100;
 	data[static_cast<int>(AircraftType::kEagle)].m_speed = 200.f;
 	data[static_cast<int>(AircraftType::kEagle)].m_fire_interval = sf::seconds(1);
 	data[static_cast<int>(AircraftType::kEagle)].m_texture = TextureID::kEagle;
 
+	//Enemies
 	data[static_cast<int>(AircraftType::kRaptor)].m_hitpoints = 20;
 	data[static_cast<int>(AircraftType::kRaptor)].m_speed = 80.f;
 	data[static_cast<int>(AircraftType::kRaptor)].m_fire_interval = sf::Time::Zero;
@@ -22,6 +24,13 @@ std::vector<AircraftData> InitializeAircraftData()
 	data[static_cast<int>(AircraftType::kRaptor)].m_directions.emplace_back(Direction(+45.f, 80.f));
 	data[static_cast<int>(AircraftType::kRaptor)].m_directions.emplace_back(Direction(-45.f, 160.f));
 	data[static_cast<int>(AircraftType::kRaptor)].m_directions.emplace_back(Direction(+45.f, 80.f));
+	
+	//player 2 aircraft
+	data[static_cast<int>(AircraftType::kPlayer2Ship)].m_hitpoints = 100;
+	data[static_cast<int>(AircraftType::kPlayer2Ship)].m_speed = 200.f;
+	data[static_cast<int>(AircraftType::kPlayer2Ship)].m_fire_interval = sf::seconds(1);
+	data[static_cast<int>(AircraftType::kPlayer2Ship)].m_texture = TextureID::kPlayer2Ship;
+
 	return data;
 }
 
