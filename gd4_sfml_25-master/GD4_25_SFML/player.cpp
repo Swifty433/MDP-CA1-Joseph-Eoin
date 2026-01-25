@@ -45,7 +45,7 @@ Player::Player(int player_num)
     }
 
     InitialiseActions();
-   
+   //based on player number set the aircrafts category to either player 1 or 2
     const unsigned int myCategory =
         (m_player_number == 1)
         ? static_cast<unsigned int>(ReceiverCategories::kPlayer1Aircraft)

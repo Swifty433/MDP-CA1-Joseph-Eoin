@@ -10,6 +10,7 @@
 class Player
 {
 public:
+	//store player number to help separate player 1 and 2 commands. Used to set category
 	Player(int player_num);
 	void HandleEvent(const sf::Event& event, CommandQueue& command_queue);
 	void HandleRealTimeInput(CommandQueue& command_queue);

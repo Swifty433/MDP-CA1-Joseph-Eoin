@@ -26,11 +26,11 @@ bool GameState::Update(sf::Time dt)
 		RequestStackPush(StateID::kGameOver);
 	}
 	//Player1
-	CommandQueue& commands_p1 = m_world.GetCommandQueueP1();
-	m_player.HandleRealTimeInput(commands_p1);
+	CommandQueue& commands = m_world.GetCommandQueue();
+	m_player.HandleRealTimeInput(commands);
 	//Player2
-	CommandQueue& commands_p2 = m_world.GetCommandQueueP2();
-	m_player_2.HandleRealTimeInput(commands_p2);
+	
+	m_player_2.HandleRealTimeInput(commands);
 
 	m_world.Update(dt);
 
@@ -39,11 +39,13 @@ bool GameState::Update(sf::Time dt)
 
 bool GameState::HandleEvent(const sf::Event& event)
 {
-	CommandQueue& commands_p1 = m_world.GetCommandQueueP1();
-	CommandQueue& commands_p2 = m_world.GetCommandQueueP2();
+	//Separated player 1 and player 2
+	CommandQueue& commands = m_world.GetCommandQueue();
+	
 
-	m_player.HandleEvent(event, commands_p1);
-	m_player_2.HandleEvent(event, commands_p2);
+	m_player.HandleEvent(event, commands);
+	m_player_2.HandleEvent(event, commands);
+
 
 	//Escape should bring up the pause menu
 	const auto* keypress = event.getIf<sf::Event::KeyPressed>();

@@ -13,8 +13,7 @@ public:
 	void Update(sf::Time dt);
 	void Draw();
 
-	CommandQueue& GetCommandQueueP1();
-	CommandQueue& GetCommandQueueP2();
+	CommandQueue& GetCommandQueue();
 
 	bool HasAlivePlayer() const;
 	bool HasPlayerReachedEnd() const;
@@ -64,8 +63,8 @@ private:
 	Aircraft* m_player_aircraft;
 	Aircraft* m_player_aircraft_2;
 
-	CommandQueue m_command_queue_p1;
-	CommandQueue m_command_queue_p2;
+	CommandQueue m_command_queue;
+	
 
 	std::vector<SpawnPoint> m_enemy_spawn_points;
 	std::vector<Aircraft*> m_active_enemies;
