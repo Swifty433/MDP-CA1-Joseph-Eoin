@@ -122,6 +122,7 @@ void World::LoadTextures()
 {
 	m_textures.Load(TextureID::kEagle, "Media/Textures/ShipAlt.png");
 	m_textures.Load(TextureID::kRaptor, "Media/Textures/Raptor.png");
+	m_textures.Load(TextureID::kPlayer2Ship, "Media/Textures/EnemyShipAlt.png");
 	m_textures.Load(TextureID::kLandscape, "Media/Textures/Background.png");
 	m_textures.Load(TextureID::kBullet, "Media/Textures/Bullet.png");
 	m_textures.Load(TextureID::kMissile, "Media/Textures/Missile.png");
@@ -171,7 +172,7 @@ void World::BuildScene()
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader));
 
 	
-	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kEagle, m_textures, m_fonts));
+	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kPlayer2Ship, m_textures, m_fonts));
 	m_player_aircraft_2 = leader_2.get();
 	m_player_aircraft_2->setPosition(m_spawn_position_2);
 	m_player_aircraft_2->SetPlayerid(2);
@@ -253,7 +254,7 @@ void World::SpawnEnemies()
 		SpawnPoint spawn = m_enemy_spawn_points.back();
 		std::unique_ptr<Aircraft> enemy(new Aircraft(spawn.m_type, m_textures, m_fonts));
 		enemy->setPosition(sf::Vector2f(spawn.m_x, spawn.m_y));
-		enemy->setRotation(sf::degrees(180.f));
+		enemy->setRotation(sf::degrees(0.f));
 		m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(enemy));
 		m_enemy_spawn_points.pop_back();
 	}
