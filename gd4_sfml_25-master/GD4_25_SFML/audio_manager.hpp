@@ -25,13 +25,20 @@ public:
 	//functions for the music
 	void play_music(Music music);
 	void stop_music();
+	void pause_music();
 
 	//functions for the sound effects
 	void play_sound(SoundEffects sound);
 	void stop_all_sounds();
 
+	//volume control
+
+
 	//update function
 	void update();
+
+private:
+	void load_sound(SoundEffects sound, const std::string& filename);
 
 private:
 	sf::Music m_background_music;
