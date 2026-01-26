@@ -71,8 +71,35 @@ void World::Update(sf::Time dt)
 		}
 	}
 
+	//
+	//Slowing down player 2
+	sf::Vector2f player2Velocity = m_player_aircraft_2->GetVelocity();
+
+	//Based on direction subtract or add speed
+	//Right subtract
+	if (player2Velocity.x > 0.f)
+	{
+		player2Velocity.x -= kPLayerFriction * dt.asSeconds();
+		//setting to 0 if the speed goes past it
+		if (player2Velocity.x < 0.f)
+		{
+			player2Velocity.x = 0.f;
+		}
+	}
+	//moving left add
+	else if (player2Velocity.x < 0.f)
+	{
+		player2Velocity.x += kPLayerFriction * dt.asSeconds();
+		//setting to 0 if the speed goes past it
+		if (player2Velocity.x > 0.f)
+		{
+			player2Velocity.x = 0.f;
+		}
+	}
+
 	//set the new speed
 	m_player_aircraft->SetVelocity(playerVelocity);
+	m_player_aircraft_2->SetVelocity(player2Velocity);
 
 	AdaptPlayerVelocity();
 
