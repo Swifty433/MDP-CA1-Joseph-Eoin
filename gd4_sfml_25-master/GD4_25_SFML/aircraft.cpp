@@ -51,6 +51,21 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 {
 	Utility::CentreOrigin(m_sprite);
 
+	//SpawnEnemyCommand
+	m_spawn_enemy = false;
+
+	m_spawn_enemy_command.category = static_cast<int>(ReceiverCategories::kScene);
+	m_spawn_enemy_command.action = [this, &textures, &fonts](SceneNode& node, sf::Time)
+		{
+			sf::Vector2f p = this->GetWorldPosition();
+
+			std::unique_ptr<Aircraft> enemy(new Aircraft(AircraftType::kRaptor, textures, fonts));
+			enemy->setPosition(sf::Vector2f(p.x, p.y + 60.f));
+
+			node.AttachChild(std::move(enemy));
+		};
+
+	//Fire bullet command
 	m_fire_command.category = static_cast<int>(ReceiverCategories::kScene);
 	m_fire_command.action = [this, &textures](SceneNode& node, sf::Time dt)
 		{		
@@ -249,6 +264,7 @@ void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 
 	//Check if bullets or missiles were fired
 	CheckProjectileLaunch(dt, commands);
+	CheckEnemySpawn(commands);
 }
 
 void Aircraft::CheckProjectileLaunch(sf::Time dt, CommandQueue& commands)
@@ -307,4 +323,18 @@ void Aircraft::CheckPickupDrop(CommandQueue& commands)
 void Aircraft::SetPlayerid(int id)
 {
 	m_player_id = id;
+}
+
+void Aircraft::SpawnEnemy()
+{
+	m_spawn_enemy = true;
+}
+
+void Aircraft::CheckEnemySpawn(CommandQueue& commands)
+{
+	if (m_spawn_enemy)
+	{
+		commands.Push(m_spawn_enemy_command);
+		m_spawn_enemy = false;
+	}
 }

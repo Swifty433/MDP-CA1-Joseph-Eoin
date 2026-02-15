@@ -97,7 +97,7 @@ void World::Update(sf::Time dt)
 		}
 	}
 
-	//set the new speed
+	//set the new friction speed
 	m_player_aircraft->SetVelocity(playerVelocity);
 	m_player_aircraft_2->SetVelocity(player2Velocity);
 
@@ -462,5 +462,7 @@ void World::DestroyEntitiesOutsideView()
 	m_command_queue.Push(command);
 
 }
+
+
 
 

@@ -26,11 +26,15 @@ public:
 	void LaunchMissile();
 	void CreateBullet(SceneNode& node, const TextureHolder& textures) const;
 	void CreateProjectile(SceneNode& node, ProjectileType type, float x_offset, float y_offset, const TextureHolder& textures) const;
+	void SpawnEnemy();
 
 	sf::FloatRect GetBoundingRect() const override;
 	bool IsMarkedForRemoval() const override;
 
+
+
 private:
+	void CheckEnemySpawn(CommandQueue& commands);
 	virtual void DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void UpdateCurrent(sf::Time dt, CommandQueue& commands) override;
 
@@ -40,6 +44,9 @@ private:
 	void CheckPickupDrop(CommandQueue& commands);
 
 private:
+	Command m_spawn_enemy_command;
+	bool m_spawn_enemy;
+
 	AircraftType m_type;
 	sf::Sprite m_sprite;
 

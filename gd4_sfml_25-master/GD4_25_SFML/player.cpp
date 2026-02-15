@@ -155,6 +155,13 @@ void Player::InitialiseActions()
         }
     );
 
+    //Alien Spawn mechanic
+    m_action_binding[Action::kSpawnAlienPlayer2].action =
+        DerivedAction<Aircraft>([](Aircraft& a, sf::Time)
+            {
+                a.SpawnEnemy();
+            });
+
 }
 
 bool Player::IsRealTimeAction(Action action)
