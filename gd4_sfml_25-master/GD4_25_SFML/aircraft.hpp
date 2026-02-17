@@ -21,6 +21,10 @@ public:
 	void UpdateTexts();
 	void UpdateMovementPattern(sf::Time dt);
 
+	//Meter Methods
+	void RequestSpawnEnemy();
+	float GetResourceMeter() const { return m_resource_meter; }
+
 	float GetMaxSpeed() const;
 	void Fire();
 	void LaunchMissile();
@@ -34,6 +38,24 @@ public:
 
 
 private:
+	//Meter Methods
+	void UpdateResourceMeter(sf::Time dt);
+	void TrySpawnEnemy(CommandQueue& commands);
+
+	//Meter stats
+	float m_resource_meter = 0.f;
+	float m_resource_meter_max = 200.f;
+	float m_resource_regen = 5.f;
+	float m_resource_cost_spawn_enemy = 20.f;
+	Command m_spawn_enemy_command;
+
+	//Spawning Enemies
+	private:
+	
+		bool m_spawn_requested;
+	bool m_spawn_enemy;
+
+
 	void CheckEnemySpawn(CommandQueue& commands);
 	virtual void DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 	virtual void UpdateCurrent(sf::Time dt, CommandQueue& commands) override;
@@ -43,9 +65,7 @@ private:
 	void CreatePickup(SceneNode& node, const TextureHolder& textures);
 	void CheckPickupDrop(CommandQueue& commands);
 
-private:
-	Command m_spawn_enemy_command;
-	bool m_spawn_enemy;
+
 
 	AircraftType m_type;
 	sf::Sprite m_sprite;

@@ -52,6 +52,8 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	Utility::CentreOrigin(m_sprite);
 
 	//SpawnEnemyCommand
+		//Resource meter set up.
+	m_resource_meter = 0.f;
 	m_spawn_enemy = false;
 
 	m_spawn_enemy_command.category = static_cast<int>(ReceiverCategories::kScene);
@@ -96,6 +98,9 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 		AttachChild(std::move(missile_display));
 	}
 	UpdateTexts();
+
+	
+
 }
 
 unsigned int Aircraft::GetCategory() const
@@ -265,6 +270,9 @@ void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 	//Check if bullets or missiles were fired
 	CheckProjectileLaunch(dt, commands);
 	CheckEnemySpawn(commands);
+
+	UpdateResourceMeter(dt);
+	TrySpawnEnemy(commands);
 }
 
 void Aircraft::CheckProjectileLaunch(sf::Time dt, CommandQueue& commands)
@@ -338,3 +346,32 @@ void Aircraft::CheckEnemySpawn(CommandQueue& commands)
 		m_spawn_enemy = false;
 	}
 }
+
+//Spawning Enemy with resource meter
+//Request to spawn
+void Aircraft::RequestSpawnEnemy()
+{
+	m_spawn_requested = true;
+}
+
+//Add to the resource meter
+void Aircraft::UpdateResourceMeter(sf::Time dt)
+{
+	m_resource_meter += m_resource_regen * dt.asSeconds();
+	if (m_resource_meter > m_resource_meter_max)
+		m_resource_meter = m_resource_meter_max;
+}
+
+//Check if you got enough to spawn enemy.
+void Aircraft::TrySpawnEnemy(CommandQueue& commands)
+{
+	if (m_spawn_requested && m_resource_meter >= m_resource_cost_spawn_enemy)
+	{
+		m_resource_meter -= m_resource_cost_spawn_enemy;
+		commands.Push(m_spawn_enemy_command);
+	}
+
+	m_spawn_requested=false;
+}
+
+

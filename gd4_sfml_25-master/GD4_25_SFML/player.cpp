@@ -139,7 +139,7 @@ void Player::InitialiseActions()
     m_action_binding[Action::kMoveRightPlayer2].action =
         DerivedAction<Aircraft>(AircraftMover(kPlayerAcceleration));
 
-
+  
 
     
 
@@ -159,7 +159,7 @@ void Player::InitialiseActions()
     m_action_binding[Action::kSpawnAlienPlayer2].action =
         DerivedAction<Aircraft>([](Aircraft& a, sf::Time)
             {
-                a.SpawnEnemy();
+                a.RequestSpawnEnemy();
             });
 
 }
