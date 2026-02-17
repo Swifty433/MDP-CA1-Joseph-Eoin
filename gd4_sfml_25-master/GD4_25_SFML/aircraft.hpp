@@ -72,6 +72,7 @@ private:
 
 	TextNode* m_health_display;
 	TextNode* m_missile_display;
+	TextNode* m_resource_display;
 
 	float m_distance_travelled;
 	int m_directions_index;

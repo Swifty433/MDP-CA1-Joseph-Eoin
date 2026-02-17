@@ -90,6 +90,11 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	m_health_display = health_display.get();
 	AttachChild(std::move(health_display));
 
+	std::string* resource = new std::string("");
+	std::unique_ptr<TextNode> resource_display(new TextNode(fonts, *resource));
+	m_resource_display = resource_display.get();
+	AttachChild(std::move(resource_display));
+
 	if (Aircraft::GetCategory() == static_cast<int>(ReceiverCategories::kPlayerAircraft))
 	{
 		std::string* missile_ammo = new std::string("");
@@ -158,6 +163,15 @@ void Aircraft::UpdateTexts()
 		{
 			m_missile_display->SetString("M: " + std::to_string(m_missile_ammo));
 		}
+	}
+
+	if (m_resource_display)
+	{
+		m_resource_display->setPosition(sf::Vector2f(0.f, 80.f));
+		m_resource_display->setRotation(-getRotation());
+
+		int res = static_cast<int>(m_resource_meter);
+		m_resource_display->SetString(std::to_string(res) + "/" + std::to_string((int)m_resource_meter_max));
 	}
 }
 
