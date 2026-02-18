@@ -6,12 +6,18 @@ SettingsState::SettingsState(StateStack& stack, Context context)
     , m_gui_container()
     , m_background_sprite(context.textures->Get(TextureID::kTitleScreen))
 {
-    AddButtonLabel(Action::kMoveUp, 150.f, "Move Up", context);
-    AddButtonLabel(Action::kMoveDown, 200.f, "Move Down", context);
-    AddButtonLabel(Action::kMoveRight, 250.f, "Move Right", context);
-    AddButtonLabel(Action::kMoveLeft, 300.f, "Move Left", context);
-    AddButtonLabel(Action::kBulletFire, 350.f, "Fire", context);
-    AddButtonLabel(Action::kMissileFire, 400.f, "Missile Fire", context);
+    //AddButtonLabel(Action::kMoveUp, 150.f, "Move Up", context);
+    //AddButtonLabel(Action::kMoveDown, 200.f, "Move Down", context);
+    AddButtonLabel(Action::kMoveRight, 150.f, 80.f, "Move Right", context);
+    AddButtonLabel(Action::kMoveLeft, 200.f, 80.f, "Move Left", context);
+    AddButtonLabel(Action::kBulletFire, 250.f, 80.f, "Fire", context);
+    AddButtonLabel(Action::kMissileFire, 300.f, 80.f, "Missile Fire", context);
+
+	AddButtonLabel(Action::kMoveRightPlayer2, 150.f, 650.f, "Move Right Player 2", context);
+	AddButtonLabel(Action::kMoveLeftPlayer2, 200.f, 650.f, "Move Left Player 2", context);
+	AddButtonLabel(Action::kSpawnAlienPlayer2, 250.f, 650.f, "Spawn Alien Ship", context);
+	AddButtonLabel(Action::kSpawnAlien2Player2, 300.f, 650.f, "Spawn Alien Ship 2", context);
+	AddButtonLabel(Action::kSpawnAlien3Player2, 350.f, 650.f, "Spawn Alien Ship 3", context);
 
     UpdateLabels();
 
@@ -70,20 +76,23 @@ void SettingsState::UpdateLabels()
     Player& player = *GetContext().player;
     for (std::size_t i = 0; i < static_cast<int>(Action::kActionCount); ++i)
     {
-        sf::Keyboard::Scancode key = player.GetAssignedKey(static_cast<Action>(i));
-        m_binding_labels[i]->SetText(Utility::toString(key));
+        if (m_binding_labels[i])
+        {
+            sf::Keyboard::Scancode key = player.GetAssignedKey(static_cast<Action>(i));
+            m_binding_labels[i]->SetText(Utility::toString(key));
+        }
     }
 }
 
-void SettingsState::AddButtonLabel(Action action, float y, const std::string& text, Context context)
+void SettingsState::AddButtonLabel(Action action, float y, float x, const std::string& text, Context context)
 {
     m_binding_buttons[static_cast<int>(action)] = std::make_shared<gui::Button>(*context.fonts, *context.textures);
-    m_binding_buttons[static_cast<int>(action)]->setPosition(sf::Vector2f(80.f, y));
+    m_binding_buttons[static_cast<int>(action)]->setPosition(sf::Vector2f(x,y));
     m_binding_buttons[static_cast<int>(action)]->SetText(text);
     m_binding_buttons[static_cast<int>(action)]->SetToggle(true);
 
     m_binding_labels[static_cast<int>(action)] = std::make_shared<gui::Label>("",  * context.fonts);
-    m_binding_labels[static_cast<int>(action)]->setPosition(sf::Vector2f(300.f, y + 15.f));
+    m_binding_labels[static_cast<int>(action)]->setPosition(sf::Vector2f(x + 225.f, y + 15.f));
 
     m_gui_container.Pack(m_binding_buttons[static_cast<int>(action)]);
     m_gui_container.Pack(m_binding_labels[static_cast<int>(action)]);

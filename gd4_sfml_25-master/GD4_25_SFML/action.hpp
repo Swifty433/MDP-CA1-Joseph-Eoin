@@ -4,8 +4,8 @@ enum class Action
 	//player 1 controls
 	kMoveLeft,
 	kMoveRight,
-	kMoveUp,
-	kMoveDown,
+	//kMoveUp,
+	//kMoveDown,
 	kBulletFire,
 	kMissileFire,
 	

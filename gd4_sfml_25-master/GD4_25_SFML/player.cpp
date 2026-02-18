@@ -126,24 +126,24 @@ void Player::InitialiseActions()
     //players accel
     const float kPlayerAcceleration = 300.f;
     //Using negative since its backwards to accel left
-    m_action_binding[Action::kMoveLeft].action = 
-        DerivedAction<Aircraft>(AircraftMover(-kPlayerAcceleration));
-
-    m_action_binding[Action::kMoveLeftPlayer2].action =
-        DerivedAction<Aircraft>(AircraftMover(-kPlayerAcceleration));
-
     //Using positive to accel right
+
+    //Player 1 movement
+    m_action_binding[Action::kMoveLeft].action =
+        DerivedAction<Aircraft>(AircraftMover(-kPlayerAcceleration));
     m_action_binding[Action::kMoveRight].action =
         DerivedAction<Aircraft>(AircraftMover(kPlayerAcceleration));
 
+    //Player 2 movement
+    m_action_binding[Action::kMoveLeftPlayer2].action =
+        DerivedAction<Aircraft>(AircraftMover(-kPlayerAcceleration));
     m_action_binding[Action::kMoveRightPlayer2].action =
         DerivedAction<Aircraft>(AircraftMover(kPlayerAcceleration));
-
   
 
     
 
-    //Shooting mechanics
+    //Player 1 Shooting mechanics
     m_action_binding[Action::kBulletFire].action = DerivedAction<Aircraft>([](Aircraft& a, sf::Time dt)
         {
             a.Fire();
@@ -155,7 +155,7 @@ void Player::InitialiseActions()
         }
     );
 
-    //Alien Spawn mechanic
+    //Player 2 Alien Spawn mechanic
     m_action_binding[Action::kSpawnAlienPlayer2].action =
         DerivedAction<Aircraft>([](Aircraft& a, sf::Time)
             {
@@ -172,8 +172,8 @@ bool Player::IsRealTimeAction(Action action)
     case Action::kMoveRight:
     case Action::kMoveLeftPlayer2:
     case Action::kMoveRightPlayer2:
-    case Action::kMoveUp:
-    case Action::kMoveDown:
+    //case Action::kMoveUp:
+    //case Action::kMoveDown:
     case Action::kBulletFire:
         return true;
     default:
