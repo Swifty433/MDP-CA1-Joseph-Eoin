@@ -131,14 +131,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="aircraft.cpp" />
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="audio_manager.cpp" />
+    <ClCompile Include="bloom_effect.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="command.cpp" />
     <ClCompile Include="command_queue.cpp" />
     <ClCompile Include="component.cpp" />
     <ClCompile Include="container.cpp" />
     <ClCompile Include="data_tables.cpp" />
+    <ClCompile Include="emitter_node.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="game_over_state.cpp" />
     <ClCompile Include="game_state.cpp" />
@@ -146,9 +149,11 @@
     <ClCompile Include="label.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu_state.cpp" />
+    <ClCompile Include="particle_node.cpp" />
     <ClCompile Include="pause_state.cpp" />
     <ClCompile Include="pickup.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="posteffect.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="scene_node.cpp" />
     <ClCompile Include="settings_state.cpp" />
@@ -165,15 +170,19 @@
     <ClInclude Include="action.hpp" />
     <ClInclude Include="aircraft.hpp" />
     <ClInclude Include="aircraft_type.hpp" />
+    <ClInclude Include="animation.hpp" />
     <ClInclude Include="application.hpp" />
     <ClInclude Include="audio_manager.hpp" />
+    <ClInclude Include="bloom_effect.hpp" />
     <ClInclude Include="button.hpp" />
+    <ClInclude Include="button_type.hpp" />
     <ClInclude Include="command.hpp" />
     <ClInclude Include="command_queue.hpp" />
     <ClInclude Include="component.hpp" />
     <ClInclude Include="constants.hpp" />
     <ClInclude Include="container.hpp" />
     <ClInclude Include="data_tables.hpp" />
+    <ClInclude Include="emitter_node.hpp" />
     <ClInclude Include="entity.hpp" />
     <ClInclude Include="fontID.hpp" />
     <ClInclude Include="game_over_state.hpp" />
@@ -183,10 +192,14 @@
     <ClInclude Include="menu_options.hpp" />
     <ClInclude Include="menu_state.hpp" />
     <ClInclude Include="mission_status.hpp" />
+    <ClInclude Include="particle.hpp" />
+    <ClInclude Include="particletype.hpp" />
+    <ClInclude Include="particle_node.hpp" />
     <ClInclude Include="pause_state.hpp" />
     <ClInclude Include="pickup.hpp" />
     <ClInclude Include="pickup_type.hpp" />
     <ClInclude Include="player.hpp" />
+    <ClInclude Include="posteffect.hpp" />
     <ClInclude Include="projectile.hpp" />
     <ClInclude Include="projectile_type.hpp" />
     <ClInclude Include="receiver_categories.hpp" />
@@ -195,6 +208,7 @@
     <ClInclude Include="scene_layers.hpp" />
     <ClInclude Include="scene_node.hpp" />
     <ClInclude Include="settings_state.hpp" />
+    <ClInclude Include="shader_types.hpp" />
     <ClInclude Include="sprite_node.hpp" />
     <ClInclude Include="stack_actions.hpp" />
     <ClInclude Include="state.hpp" />

@@ -1,5 +1,6 @@
 #pragma once
 #include "texture_id.hpp"
+#include "particletype.hpp"
 #include <SFML/System/Time.hpp>
 #include <functional>
 #include "aircraft.hpp"
@@ -35,9 +36,16 @@ struct PickupData
 	TextureID m_texture;
 };
 
+struct ParticleData
+{
+	sf::Color m_color;
+	sf::Time m_lifetime;
+};
+
 std::vector<AircraftData> InitializeAircraftData();
 std::vector<ProjectileData> InitializeProjectileData();
 std::vector<PickupData> InitializePickupData();
+std::vector<ParticleData> InitializeParticleData();
 
 
 

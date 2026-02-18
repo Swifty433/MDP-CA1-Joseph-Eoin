@@ -13,6 +13,7 @@ enum class ReceiverCategories
 	kAlliedProjectile = 1 << 6,
 	kEnemyProjectile = 1 << 7,
 	kPickup = 1 << 8,
+	kParticleSystem = 1 << 7,
 
 	kAircraft = kPlayerAircraft | kAlliedAircraft | kEnemyAircraft,
 	kProjectile = kAlliedProjectile | kEnemyProjectile
