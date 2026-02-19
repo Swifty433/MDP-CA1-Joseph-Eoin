@@ -9,6 +9,8 @@
 namespace sf
 {
 	class Texture;
+	class Font;
+	class Shader;
 }
 
 //template<typename Identifier, typename Resource>

@@ -5,10 +5,12 @@
 #include <SFML/System/Angle.hpp>
 #include "Projectile.hpp"
 #include "pickup.hpp"
+#include "particle_node.hpp"
+#include "particletype.hpp"
 
-World::World(sf::RenderWindow& window, FontHolder& font)
-	: m_window(window)
-	, m_camera(window.getDefaultView())
+World::World(sf::RenderTarget& output_target, FontHolder& font)
+	: m_target(output_target)
+	, m_camera(output_target.getDefaultView())
 	, m_textures()
 	, m_fonts(font)
 	, m_scene_graph(ReceiverCategories::kNone)
@@ -20,6 +22,7 @@ World::World(sf::RenderWindow& window, FontHolder& font)
 	, m_player_aircraft(nullptr)
 	, m_player_aircraft_2(nullptr)
 {
+	m_scene_texture.resize({ m_target.getSize().x, m_target.getSize().y });
 	LoadTextures();
 	BuildScene();
 	sf::Vector2f camera_center = sf::Vector2f(m_camera.getSize().x / 2.f, m_world_bounds.size.y - m_camera.getSize().y / 2.f);
@@ -41,7 +44,7 @@ void World::Update(sf::Time dt)
 	{
 		m_scene_graph.OnCommand(m_command_queue.Pop(), dt);
 	}
-	
+
 
 	//Friction Slowing down the player constantly
 	const float kPLayerFriction = 100.f;
@@ -116,8 +119,19 @@ void World::Update(sf::Time dt)
 
 void World::Draw()
 {
-	m_window.setView(m_camera);
-	m_window.draw(m_scene_graph);
+	if (PostEffect::IsSupported())
+	{
+		m_scene_texture.clear();
+		m_scene_texture.setView(m_camera);
+		m_scene_texture.draw(m_scene_graph);
+		m_scene_texture.display();
+		m_bloom_effect.Apply(m_scene_texture, m_target);
+	}
+	else
+	{
+		m_target.setView(m_camera);
+		m_target.draw(m_scene_graph);
+	}
 }
 
 
@@ -141,7 +155,7 @@ bool World::HasPlayerReachedEnd() const
 
 void World::LoadTextures()
 {
-	m_textures.Load(TextureID::kEagle, "Media/Textures/ShipAlt.png");
+	m_textures.Load(TextureID::kEagle, "Media/Textures/ShipAltSpriteSheet.png");
 	m_textures.Load(TextureID::kRaptor, "Media/Textures/EnemyShipAlt.png");
 	m_textures.Load(TextureID::kPlayer2Ship, "Media/Textures/Raptor.png");
 	m_textures.Load(TextureID::kLandscape, "Media/Textures/Background.png");
@@ -153,6 +167,8 @@ void World::LoadTextures()
 	m_textures.Load(TextureID::kFireSpread, "Media/Textures/FireSpread.png");
 	m_textures.Load(TextureID::kFireRate, "Media/Textures/FireRate.png");
 	m_textures.Load(TextureID::kFinishLine, "Media/Textures/FinishLine.png");
+
+	m_textures.Load(TextureID::kParticle, "Media/Textures/Particle.png");
 
 }
 
@@ -191,21 +207,12 @@ void World::BuildScene()
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader));
 
-	
 	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kPlayer2Ship, m_textures, m_fonts));
 	m_player_aircraft_2 = leader_2.get();
 	m_player_aircraft_2->setPosition(m_spawn_position_2);
 	m_player_aircraft_2->SetPlayerid(2);
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader_2));
-
-	/*std::unique_ptr<Aircraft> left_escort(new Aircraft(AircraftType::kRaptor, m_textures, m_fonts));
-	left_escort->setPosition(sf::Vector2f(- 80.f, 50.f));
-	m_player_aircraft->AttachChild(std::move(left_escort));
-
-	std::unique_ptr<Aircraft> right_escort(new Aircraft(AircraftType::kRaptor, m_textures, m_fonts));
-	right_escort->setPosition(sf::Vector2f(80.f, 50.f));
-	m_player_aircraft->AttachChild(std::move(right_escort));*/
 
 	AddEnemies();
 }
@@ -436,7 +443,7 @@ void World::HandleCollisions()
 			pickup.Apply(player);
 			pickup.Destroy();
 		}
-		else if (MatchesCategories(pair, ReceiverCategories::kPlayerAircraft, ReceiverCategories::kEnemyProjectile) || MatchesCategories(pair,ReceiverCategories::kEnemyAircraft, ReceiverCategories::kAlliedProjectile))
+		else if (MatchesCategories(pair, ReceiverCategories::kPlayerAircraft, ReceiverCategories::kEnemyProjectile) || MatchesCategories(pair, ReceiverCategories::kEnemyAircraft, ReceiverCategories::kAlliedProjectile))
 		{
 			auto& aircraft = static_cast<Aircraft&>(*pair.first);
 			auto& projectile = static_cast<Projectile&>(*pair.second);
@@ -452,13 +459,13 @@ void World::DestroyEntitiesOutsideView()
 	Command command;
 	command.category = static_cast<int>(ReceiverCategories::kEnemyAircraft) | static_cast<int>(ReceiverCategories::kProjectile);
 	command.action = DerivedAction<Entity>([this](Entity& e, sf::Time dt)
-	{
-		//Does the object intersect with the battlefield
-		if (GetBattleFieldBounds().findIntersection(e.GetBoundingRect()) == std::nullopt)
 		{
-			e.Destroy();
-		}
-	});
+			//Does the object intersect with the battlefield
+			if (GetBattleFieldBounds().findIntersection(e.GetBoundingRect()) == std::nullopt)
+			{
+				e.Destroy();
+			}
+		});
 	m_command_queue.Push(command);
 
 }

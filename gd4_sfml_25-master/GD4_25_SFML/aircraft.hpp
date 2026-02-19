@@ -52,9 +52,8 @@ private:
 	//Spawning Enemies
 	private:
 	
-		bool m_spawn_requested;
+	bool m_spawn_requested;
 	bool m_spawn_enemy;
-
 
 	void CheckEnemySpawn(CommandQueue& commands);
 	virtual void DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -64,6 +63,7 @@ private:
 	bool IsAllied() const;
 	void CreatePickup(SceneNode& node, const TextureHolder& textures);
 	void CheckPickupDrop(CommandQueue& commands);
+	void UpdateRollAnimation();
 
 
 
@@ -92,6 +92,6 @@ private:
 	sf::Time m_fire_countdown;
 
 	bool m_is_marked_for_removal;
-
+	bool m_show_explosion;
 };
 
