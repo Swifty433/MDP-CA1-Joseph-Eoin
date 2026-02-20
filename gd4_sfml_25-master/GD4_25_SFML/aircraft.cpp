@@ -334,7 +334,7 @@ void Aircraft::CreatePickup(SceneNode& node, const TextureHolder& textures)
 		auto type = static_cast<PickupType>(Utility::RandomInt(static_cast<int>(PickupType::kPickupCount)));
 		std::unique_ptr<Pickup> pickup(new Pickup(type, textures));
 		pickup->setPosition(GetWorldPosition());
-		pickup->SetVelocity(0.f, 0.f);
+		pickup->SetVelocity(0.f, 100.f);
 		node.AttachChild(std::move(pickup));
 	}
 	m_spawned_pickup = true;

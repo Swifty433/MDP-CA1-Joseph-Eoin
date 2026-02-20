@@ -6,6 +6,7 @@
 #include "aircraft.hpp"
 #include "command_queue.hpp"
 #include "bloom_effect.hpp"
+class SpriteNode;
 
 class World
 {
@@ -72,5 +73,8 @@ private:
 	std::vector<Aircraft*> m_active_enemies;
 
 	BloomEffect m_bloom_effect;
+
+	float m_background_scroll;
+	SpriteNode* m_background_node;
 };
 

@@ -3,6 +3,7 @@
 
 gui::Label::Label(const std::string& text, const FontHolder& font) : m_text(font.Get(FontID::kMain), text, 16)
 {
+    m_text.setFillColor(sf::Color::Black);
 }
 
 bool gui::Label::IsSelectable() const

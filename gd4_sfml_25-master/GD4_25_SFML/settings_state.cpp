@@ -1,28 +1,41 @@
 #include "settings_state.hpp"
 #include "Utility.hpp"
 
+static bool IsPlayer2Action(Action action)
+{
+    return action == Action::kMoveLeftPlayer2 || action == Action::kMoveRightPlayer2 || action == Action::kSpawnAlienPlayer2 || action == Action::kSpawnAlien2Player2 || action == Action::kSpawnAlien3Player2;
+}
+
 SettingsState::SettingsState(StateStack& stack, Context context)
     : State(stack, context)
     , m_gui_container()
-    , m_background_sprite(context.textures->Get(TextureID::kTitleScreen))
+    , m_background_sprite(context.textures->Get(TextureID::kAltBackground))
+    , m_title_text(context.fonts->Get(FontID::kMain))
 {
+
+    m_title_text.setString("Player Controls");
+    m_title_text.setCharacterSize(70);
+    m_title_text.setFillColor(sf::Color::Black);
+    Utility::CentreOrigin(m_title_text);
+    m_title_text.setPosition(sf::Vector2f(512.f, 100.f));
+
     //AddButtonLabel(Action::kMoveUp, 150.f, "Move Up", context);
     //AddButtonLabel(Action::kMoveDown, 200.f, "Move Down", context);
-    AddButtonLabel(Action::kMoveRight, 150.f, 80.f, "Move Right", context);
-    AddButtonLabel(Action::kMoveLeft, 200.f, 80.f, "Move Left", context);
-    AddButtonLabel(Action::kBulletFire, 250.f, 80.f, "Fire", context);
-    AddButtonLabel(Action::kMissileFire, 300.f, 80.f, "Missile Fire", context);
+    AddButtonLabel(Action::kMoveRight, 200.f, 80.f, "Move Right", context);
+    AddButtonLabel(Action::kMoveLeft, 250.f, 80.f, "Move Left", context);
+    AddButtonLabel(Action::kBulletFire, 300.f, 80.f, "Fire", context);
+    AddButtonLabel(Action::kMissileFire, 350.f, 80.f, "Missile Fire", context);
 
-	AddButtonLabel(Action::kMoveRightPlayer2, 150.f, 650.f, "Move Right Player 2", context);
-	AddButtonLabel(Action::kMoveLeftPlayer2, 200.f, 650.f, "Move Left Player 2", context);
-	AddButtonLabel(Action::kSpawnAlienPlayer2, 250.f, 650.f, "Spawn Alien Ship", context);
-	AddButtonLabel(Action::kSpawnAlien2Player2, 300.f, 650.f, "Spawn Alien Ship 2", context);
-	AddButtonLabel(Action::kSpawnAlien3Player2, 350.f, 650.f, "Spawn Alien Ship 3", context);
+	AddButtonLabel(Action::kMoveRightPlayer2, 200.f, 650.f, "Move Right Player 2", context);
+	AddButtonLabel(Action::kMoveLeftPlayer2, 250.f, 650.f, "Move Left Player 2", context);
+	AddButtonLabel(Action::kSpawnAlienPlayer2, 300.f, 650.f, "Spawn Alien Ship", context);
+	AddButtonLabel(Action::kSpawnAlien2Player2, 350.f, 650.f, "Spawn Alien Ship 2", context);
+	AddButtonLabel(Action::kSpawnAlien3Player2, 400.f, 650.f, "Spawn Alien Ship 3", context);
 
     UpdateLabels();
 
 	auto back_button = std::make_shared<gui::Button>(*context.fonts, *context.textures);
-    back_button->setPosition(sf::Vector2f(80.f, 475.f));
+    back_button->setPosition(sf::Vector2f(80.f, 575.f));
     back_button->SetText("Back");
     back_button->SetCallback(std::bind(&SettingsState::RequestStackPop, this));
     m_gui_container.Pack(back_button);
@@ -32,6 +45,7 @@ void SettingsState::Draw()
 {
     sf::RenderWindow& window = *GetContext().window;
     window.draw(m_background_sprite);
+	window.draw(m_title_text);
     window.draw(m_gui_container);
 }
 
@@ -53,7 +67,11 @@ bool SettingsState::HandleEvent(const sf::Event& event)
             const auto* key_released = event.getIf<sf::Event::KeyReleased>();
             if (key_released)
             {
-                GetContext().player->AssignKey(static_cast<Action>(action), key_released->scancode);
+                Action a = static_cast<Action>(action);
+                if (IsPlayer2Action(a))
+                    GetContext().player_2->AssignKey(a, key_released->scancode);
+                else
+                    GetContext().player->AssignKey(a, key_released->scancode);
                 m_binding_buttons[action]->Deactivate();
             }
             break;
@@ -73,12 +91,14 @@ bool SettingsState::HandleEvent(const sf::Event& event)
 
 void SettingsState::UpdateLabels()
 {
-    Player& player = *GetContext().player;
+    Player& p1 = *GetContext().player;
+    Player& p2 = *GetContext().player_2;
     for (std::size_t i = 0; i < static_cast<int>(Action::kActionCount); ++i)
     {
         if (m_binding_labels[i])
         {
-            sf::Keyboard::Scancode key = player.GetAssignedKey(static_cast<Action>(i));
+            Action a = static_cast<Action>(i);
+            sf::Keyboard::Scancode key = IsPlayer2Action(a) ? p2.GetAssignedKey(a) : p1.GetAssignedKey(a);
             m_binding_labels[i]->SetText(Utility::toString(key));
         }
     }

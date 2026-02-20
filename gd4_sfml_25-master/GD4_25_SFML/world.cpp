@@ -21,6 +21,7 @@ World::World(sf::RenderTarget& output_target, FontHolder& font)
 	, m_scroll_speed(-100.f)
 	, m_player_aircraft(nullptr)
 	, m_player_aircraft_2(nullptr)
+	, m_background_scroll(0.f)
 {
 	m_scene_texture.resize({ m_target.getSize().x, m_target.getSize().y });
 	LoadTextures();
@@ -35,6 +36,17 @@ void World::Update(sf::Time dt)
 	//m_camera.move(sf::Vector2f(0, m_scroll_speed * dt.asSeconds()));
 
 	//m_player_aircraft->SetVelocity(0.f, 0.f);
+
+	// Scroll background
+	m_background_scroll += 50.f * dt.asSeconds();
+	sf::Texture& bg_texture = m_textures.Get(TextureID::kLandscape);
+	sf::Vector2u tex_size = bg_texture.getSize();
+	if (m_background_scroll >= static_cast<float>(tex_size.y))
+		m_background_scroll -= static_cast<float>(tex_size.y);
+
+	sf::IntRect scrolled_rect(m_world_bounds);
+	scrolled_rect.position.y = static_cast<int>(m_background_scroll);
+	m_background_node->SetTextureRect(scrolled_rect);
 
 	DestroyEntitiesOutsideView();
 	GuideMissiles();
@@ -191,6 +203,7 @@ void World::BuildScene()
 	//Add the background sprite to the world
 	std::unique_ptr<SpriteNode> background_sprite(new SpriteNode(texture, textureRect));
 	background_sprite->setPosition(sf::Vector2f(0, 0));
+	m_background_node = background_sprite.get();
 	m_scene_layers[static_cast<int>(SceneLayers::kBackground)]->AttachChild(std::move(background_sprite));
 
 	//Add the finish line
@@ -435,7 +448,7 @@ void World::HandleCollisions()
 			player.Damage(enemy.GetHitPoints());
 			enemy.Destroy();
 		}
-		else if (MatchesCategories(pair, ReceiverCategories::kPlayerAircraft, ReceiverCategories::kPickup))
+		else if (MatchesCategories(pair, ReceiverCategories::kPlayer1Aircraft, ReceiverCategories::kPickup))
 		{
 			auto& player = static_cast<Aircraft&>(*pair.first);
 			auto& pickup = static_cast<Pickup&>(*pair.second);
