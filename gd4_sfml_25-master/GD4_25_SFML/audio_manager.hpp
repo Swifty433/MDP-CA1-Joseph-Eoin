@@ -31,7 +31,11 @@ public:
 	void play_sound(SoundEffects sound);
 	void stop_all_sounds();
 
-	//volume control
+	//volume toggle
+	void toggle_music();
+	void toggle_sound();
+	bool is_music_on() const;
+	bool is_sound_on() const;
 
 
 	//update function
@@ -49,5 +53,7 @@ private:
 	std::list<sf::Sound> m_sounds;
 	float m_sound_volume;
 
+	bool m_music_on;
+	bool m_sound_on;
 };
 

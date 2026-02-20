@@ -8,7 +8,7 @@
 #include "particle_node.hpp"
 #include "particletype.hpp"
 
-World::World(sf::RenderTarget& output_target, FontHolder& font)
+World::World(sf::RenderTarget& output_target, FontHolder& font, Audio_Manager& audio)
 	: m_target(output_target)
 	, m_camera(output_target.getDefaultView())
 	, m_textures()
@@ -22,6 +22,7 @@ World::World(sf::RenderTarget& output_target, FontHolder& font)
 	, m_player_aircraft(nullptr)
 	, m_player_aircraft_2(nullptr)
 	, m_background_scroll(0.f)
+	, m_audio(&audio)
 {
 	m_scene_texture.resize({ m_target.getSize().x, m_target.getSize().y });
 	LoadTextures();
@@ -213,14 +214,14 @@ void World::BuildScene()
 	m_scene_layers[static_cast<int>(SceneLayers::kBackground)]->AttachChild(std::move(finish_sprite));
 
 	//setting up player 1
-	std::unique_ptr<Aircraft> leader(new Aircraft(AircraftType::kEagle, m_textures, m_fonts));
+	std::unique_ptr<Aircraft> leader(new Aircraft(AircraftType::kEagle, m_textures, m_fonts, *m_audio));
 	m_player_aircraft = leader.get();
 	m_player_aircraft->setPosition(m_spawn_position);
 	m_player_aircraft->SetPlayerid(1);
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader));
 
-	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kPlayer2Ship, m_textures, m_fonts));
+	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kPlayer2Ship, m_textures, m_fonts, *m_audio));
 	m_player_aircraft_2 = leader_2.get();
 	m_player_aircraft_2->setPosition(m_spawn_position_2);
 	m_player_aircraft_2->SetPlayerid(2);
@@ -323,7 +324,7 @@ void World::SpawnEnemies()
 	while (!m_enemy_spawn_points.empty() && m_enemy_spawn_points.back().m_y > GetBattleFieldBounds().position.y)
 	{
 		SpawnPoint spawn = m_enemy_spawn_points.back();
-		std::unique_ptr<Aircraft> enemy(new Aircraft(spawn.m_type, m_textures, m_fonts));
+		std::unique_ptr<Aircraft> enemy(new Aircraft(spawn.m_type, m_textures, m_fonts, *m_audio));
 		enemy->setPosition(sf::Vector2f(spawn.m_x, spawn.m_y));
 		enemy->setRotation(sf::degrees(0.f));
 		m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(enemy));

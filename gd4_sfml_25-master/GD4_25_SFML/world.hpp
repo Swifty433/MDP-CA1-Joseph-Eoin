@@ -6,12 +6,14 @@
 #include "aircraft.hpp"
 #include "command_queue.hpp"
 #include "bloom_effect.hpp"
+#include "audio_manager.hpp"
+
 class SpriteNode;
 
 class World
 {
 public:
-	explicit World(sf::RenderTarget& output_target, FontHolder& font);
+	explicit World(sf::RenderTarget& output_target, FontHolder& font, Audio_Manager& audio);
 	void Update(sf::Time dt);
 	void Draw();
 
@@ -76,5 +78,7 @@ private:
 
 	float m_background_scroll;
 	SpriteNode* m_background_node;
+
+	Audio_Manager* m_audio;
 };
 

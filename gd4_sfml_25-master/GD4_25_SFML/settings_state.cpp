@@ -34,6 +34,29 @@ SettingsState::SettingsState(StateStack& stack, Context context)
 
     UpdateLabels();
 
+    auto music_button = std::make_shared<gui::Button>(*context.fonts, *context.textures);
+    music_button->setPosition(sf::Vector2f(80.f, 475.f));
+    music_button->SetText("Music: ON");
+    music_button->SetToggle(true);
+    music_button->SetCallback([music_button, audio = context.audio]()
+        {
+            audio->toggle_music();
+            music_button->SetText(audio->is_music_on() ? "Music: ON" : "Music: OFF");
+        });
+    m_gui_container.Pack(music_button);
+
+    auto sfx_button = std::make_shared<gui::Button>(*context.fonts, *context.textures);
+    sfx_button->setPosition(sf::Vector2f(80.f, 525.f));
+    sfx_button->SetText("SFX: ON");
+    sfx_button->SetToggle(true);
+    sfx_button->SetCallback([sfx_button, audio = context.audio]()
+        {
+            audio->toggle_sound();
+            sfx_button->SetText(audio->is_sound_on() ? "SFX: ON" : "SFX: OFF");
+        });
+    m_gui_container.Pack(sfx_button);
+
+
 	auto back_button = std::make_shared<gui::Button>(*context.fonts, *context.textures);
     back_button->setPosition(sf::Vector2f(80.f, 575.f));
     back_button->SetText("Back");

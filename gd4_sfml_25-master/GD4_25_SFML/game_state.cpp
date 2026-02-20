@@ -1,7 +1,7 @@
 #include "game_state.hpp"
 #include "mission_status.hpp"
 
-GameState::GameState(StateStack& stack, Context context) : State(stack, context), m_world(*context.window, *context.fonts), m_player(*context.player), m_player_2(*context.player_2)
+GameState::GameState(StateStack& stack, Context context) : State(stack, context), m_world(*context.window, *context.fonts, *context.audio), m_player(*context.player), m_player_2(*context.player_2)
 {
 
 }

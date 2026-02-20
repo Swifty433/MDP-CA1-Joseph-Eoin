@@ -5,12 +5,13 @@
 #include "text_node.hpp"
 #include "projectile_type.hpp"
 #include "command_queue.hpp"
+#include "audio_manager.hpp"
 
 class Aircraft : public Entity
 {
 public:
 	void SetPlayerid(int id);
-	Aircraft(AircraftType type, const TextureHolder& textures, const FontHolder& fonts);
+	Aircraft(AircraftType type, const TextureHolder& textures, const FontHolder& fonts, Audio_Manager& audio);
 	unsigned int GetCategory() const override;
 	int m_player_id = 0;
 
@@ -93,5 +94,7 @@ private:
 
 	bool m_is_marked_for_removal;
 	bool m_show_explosion;
+
+	Audio_Manager* m_audio;
 };
 

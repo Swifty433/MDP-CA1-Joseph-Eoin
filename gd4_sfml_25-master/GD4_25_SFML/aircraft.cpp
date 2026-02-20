@@ -32,7 +32,7 @@ TextureID ToTextureID(AircraftType type)
 	return TextureID::kEagle;
 }
 
-Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontHolder& fonts) 
+Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontHolder& fonts, Audio_Manager& audio) 
 	: Entity(Table[static_cast<int>(type)].m_hitpoints) 
 	, m_type(type) 
 	, m_sprite(textures.Get(Table[static_cast<int>(type)].m_texture))
@@ -48,6 +48,7 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	, m_missile_ammo(2)
 	, m_is_marked_for_removal(false)
 	, m_spawned_pickup(false)
+	, m_audio(&audio)
 {
 	if (Table[static_cast<int>(type)].m_has_roll_animation)
 	{
@@ -65,7 +66,7 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 		{
 			sf::Vector2f p = this->GetWorldPosition();
 
-			std::unique_ptr<Aircraft> enemy(new Aircraft(AircraftType::kRaptor, textures, fonts));
+			std::unique_ptr<Aircraft> enemy(new Aircraft(AircraftType::kRaptor, textures, fonts, *m_audio));
 			enemy->setPosition(sf::Vector2f(p.x, p.y + 60.f));
 
 			node.AttachChild(std::move(enemy));
@@ -305,6 +306,7 @@ void Aircraft::CheckProjectileLaunch(sf::Time dt, CommandQueue& commands)
 	if (m_is_firing && m_fire_countdown <= sf::Time::Zero)
 	{
 		commands.Push(m_fire_command);
+		m_audio->play_sound(SoundEffects::kShoot);
 		m_fire_countdown += Table[static_cast<int>(m_type)].m_fire_interval / (m_fire_rate + 1.f);
 		m_is_firing = false;
 	}

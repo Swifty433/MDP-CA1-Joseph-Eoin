@@ -21,6 +21,8 @@ Audio_Manager::Audio_Manager()
 	, m_sound_buffers()
 	, m_sounds()
 	, m_sound_volume(default_sound_volume)
+	, m_music_on(true)
+	, m_sound_on(true)
 {
 	//loading of the music and sound effect filenames
 	m_music_filenames[Music::kMenuMusic] = "Media/Audio/MenuMusic.flac";
@@ -34,6 +36,7 @@ Audio_Manager::Audio_Manager()
 //music methods
 void Audio_Manager::play_music(Music music)
 {
+	if (!m_music_on) return;
 	std::string filename = m_music_filenames[music];
 	if (!m_background_music.openFromFile(filename))
 	{
@@ -70,6 +73,7 @@ void Audio_Manager::load_sound(SoundEffects sound, const std::string& filename)
 
 void Audio_Manager::play_sound(SoundEffects sound)
 {
+	if (!m_sound_on) return;
 	auto buffer = m_sound_buffers.find(sound);
 	if (buffer == m_sound_buffers.end())
 	{
@@ -92,6 +96,30 @@ void Audio_Manager::stop_all_sounds()
 	}
 	m_sounds.clear();
 }
+
+//volume toggle methods
+void Audio_Manager::toggle_music()
+{
+	m_music_on = !m_music_on;
+	if (m_music_on)
+	{
+		m_background_music.play();
+	}
+	else
+		m_background_music.pause();
+}
+
+void Audio_Manager::toggle_sound()
+{
+	m_sound_on = !m_sound_on;
+	if (!m_sound_on)
+	{
+		stop_all_sounds();
+	}
+}
+
+bool Audio_Manager::is_music_on() const { return m_music_on; }
+bool Audio_Manager::is_sound_on()   const { return m_sound_on; }
 
 void Audio_Manager::update()
 {
