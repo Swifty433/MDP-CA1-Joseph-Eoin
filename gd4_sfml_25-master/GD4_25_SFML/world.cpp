@@ -465,6 +465,7 @@ void World::HandleCollisions()
 			aircraft.Damage(projectile.GetDamage());
 			projectile.Destroy();
 		}
+		
 	}
 }
 

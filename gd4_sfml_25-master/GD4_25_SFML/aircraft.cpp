@@ -117,13 +117,17 @@ unsigned int Aircraft::GetCategory() const
 {
 	if (IsAllied())
 	{
+		//if its player 1 aircraft send back that it's a player aircraft and it's player 1
 		if (m_player_id == 1)
 		{
-			return static_cast<unsigned int>(ReceiverCategories::kPlayer1Aircraft);
+			return static_cast<unsigned int>(ReceiverCategories::kPlayerAircraft)
+				| static_cast<unsigned int>(ReceiverCategories::kPlayer1Aircraft) ;
 		}
 		if (m_player_id == 2)
 		{
+			//not sending back player aircraft here as we don't want it to collide with the spawned enemies
 			return static_cast<unsigned int>(ReceiverCategories::kPlayer2Aircraft);
+				//| static_cast<unsigned int>(ReceiverCategories::kPlayer2Aircraft);
 		}
 		return static_cast<unsigned int>(ReceiverCategories::kAlliedAircraft);
 	}
