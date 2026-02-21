@@ -38,6 +38,7 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	, m_sprite(textures.Get(Table[static_cast<int>(type)].m_texture))
 	, m_health_display(nullptr)
 	, m_missile_display(nullptr)
+	, m_resource_display(nullptr)
 	, m_distance_travelled(0.f) 
 	, m_directions_index(0)
 	, m_fire_rate(1)
@@ -95,10 +96,13 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	m_health_display = health_display.get();
 	AttachChild(std::move(health_display));
 
-	std::string* resource = new std::string("");
-	std::unique_ptr<TextNode> resource_display(new TextNode(fonts, *resource));
-	m_resource_display = resource_display.get();
-	AttachChild(std::move(resource_display));
+	if (type == AircraftType::kPlayer2Ship)
+	{
+		std::string* resource = new std::string("");
+		std::unique_ptr<TextNode> resource_display(new TextNode(fonts, *resource));
+		m_resource_display = resource_display.get();
+		AttachChild(std::move(resource_display));
+	}
 
 	if (Aircraft::GetCategory() == static_cast<int>(ReceiverCategories::kPlayerAircraft))
 	{
