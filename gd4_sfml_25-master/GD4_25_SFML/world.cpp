@@ -156,14 +156,33 @@ CommandQueue& World::GetCommandQueue()
 	return m_command_queue;
 }
 
-bool World::HasAlivePlayer() const
+//now redundant
+//bool World::HasAlivePlayer() const
+//{
+//	return !m_player_aircraft->IsMarkedForRemoval();
+//}
+//
+//bool World::HasPlayerReachedEnd() const
+//{
+//	return !m_world_bounds.contains(m_player_aircraft->getPosition());
+//}
+
+//new win condition depending on which player is still alive
+bool World::HasGameEnded() const
 {
-	return !m_player_aircraft->IsMarkedForRemoval();
+	return m_player_aircraft->IsMarkedForRemoval() || m_player_aircraft_2->IsMarkedForRemoval();
 }
 
-bool World::HasPlayerReachedEnd() const
+int World::GetWinner() const
 {
-	return !m_world_bounds.contains(m_player_aircraft->getPosition());
+	if (m_player_aircraft->IsMarkedForRemoval())
+	{
+		return 2; // Player 2 wins
+	}
+	else if (m_player_aircraft_2->IsMarkedForRemoval())
+	{
+		return 1; // Player 1 wins
+	}
 }
 
 void World::LoadTextures()

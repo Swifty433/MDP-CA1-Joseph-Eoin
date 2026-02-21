@@ -9,13 +9,24 @@ GameOverState::GameOverState(StateStack& stack, Context context)
 {
     sf::Vector2f window_size(context.window->getSize());
 
-    if (context.player->GetMissionStatus() == MissionStatus::kMissionSuccess)
+    //if (context.player->GetMissionStatus() == MissionStatus::kMissionSuccess)
+    //{
+    //    m_game_over_text.setString("Mission Success");
+    //}
+    //else
+    //{
+    //    m_game_over_text.setString("Mission Failure");
+    //}
+
+
+	//new win state depending on which player won
+	if (context.player->GetMissionStatus() == MissionStatus::kPlayer1Wins)
     {
-        m_game_over_text.setString("Mission Success");
+        m_game_over_text.setString("Player 1 Wins!");
     }
-    else
+    else if (context.player->GetMissionStatus() == MissionStatus::kPlayer2Wins)
     {
-        m_game_over_text.setString("Mission Failure");
+        m_game_over_text.setString("Player 2 Wins!");
     }
 
     m_game_over_text.setCharacterSize(70);
