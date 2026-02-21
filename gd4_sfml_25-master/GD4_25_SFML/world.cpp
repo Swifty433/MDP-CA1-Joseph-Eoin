@@ -44,7 +44,7 @@ void World::Update(sf::Time dt)
 	
 	
 
-	m_background_scroll += 50.f * dt.asSeconds();
+	m_background_scroll -= 50.f * dt.asSeconds();
 	sf::Texture& bg_texture = m_textures.Get(TextureID::kLandscape);
 	sf::Vector2u tex_size = bg_texture.getSize();
 	if (m_background_scroll >= static_cast<float>(tex_size.y))
@@ -191,6 +191,7 @@ int World::GetWinner() const
 	{
 		return 1; // Player 1 wins
 	}
+	
 }
 
 void World::LoadTextures()
@@ -309,7 +310,7 @@ void World::AdaptPlayerPosition()
 		m_audio->play_sound(SoundEffects::kCollision);
 
 		//knockback speed value
-		const float knockbackVelocity = 500.f;
+		const float knockbackVelocity = 1000.f;
 
 		//Get current velocity
 		sf::Vector2f velocity = m_player_aircraft->GetVelocity();
@@ -330,11 +331,12 @@ void World::AdaptPlayerPosition()
 
 	if (oldposition_p2.x != position_p2.x)
 	{
+		m_shake.Start(sf::seconds(0.3f), 10.f);
 		//Play sound effect for wall collision
 		m_audio->play_sound(SoundEffects::kCollision);
 
 		//knockback speed value
-		const float knockbackVelocity = 500.f;
+		const float knockbackVelocity = 100.f;
 
 		//Get current velocity
 		sf::Vector2f velocity = m_player_aircraft_2->GetVelocity();
@@ -484,6 +486,8 @@ void World::HandleCollisions()
 			//Collision response
 			player.Damage(enemy.GetHitPoints());
 			enemy.Destroy();
+
+			m_shake.Start(sf::seconds(0.3f), 15.f);
 		}
 		else if (MatchesCategories(pair, ReceiverCategories::kPlayer1Aircraft, ReceiverCategories::kPickup))
 		{
@@ -500,6 +504,7 @@ void World::HandleCollisions()
 			//Collision response
 			aircraft.Damage(projectile.GetDamage());
 			projectile.Destroy();
+			m_shake.Start(sf::seconds(0.3f), 1.f);
 		}
 		//Bullet code damaging player 2 helped with copilot.
 		else if (MatchesCategories(pair, ReceiverCategories::kPlayer2Aircraft, ReceiverCategories::kAlliedProjectile)) {
@@ -509,6 +514,7 @@ void World::HandleCollisions()
 			//Collision response
 			player2.Damage(projectile.GetDamage());
 			projectile.Destroy();
+			m_shake.Start(sf::seconds(0.3f), 15.f);
 		}
 		//misile code when colliding with player 2 helped with copilot.
 		else if (MatchesCategories(pair, ReceiverCategories::kPlayer2Aircraft, ReceiverCategories::kEnemyProjectile)) {
@@ -517,6 +523,7 @@ void World::HandleCollisions()
 			//Collision response
 			player2.Damage(projectile.GetDamage());
 			projectile.Destroy();
+			m_shake.Start(sf::seconds(0.3f), 25.f);
 		}
 	}
 }
