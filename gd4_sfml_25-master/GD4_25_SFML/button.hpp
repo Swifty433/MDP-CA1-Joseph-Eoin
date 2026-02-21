@@ -2,6 +2,7 @@
 #include "component.hpp"
 #include "resource_identifiers.hpp"
 #include <functional>
+#include "audio_manager.hpp"
 
 namespace gui
 {
@@ -12,7 +13,7 @@ namespace gui
 		typedef std::function<void()> Callback;
 
 	public:
-		Button(const FontHolder& fonts, const TextureHolder& textures);
+		Button(const FontHolder& fonts, const TextureHolder& textures, Audio_Manager& audio);
 		void SetCallback(Callback callback);
 		void SetText(const std::string& text);
 		void SetToggle(bool flag);
@@ -37,6 +38,8 @@ namespace gui
 		sf::Sprite m_sprite;
 		sf::Text m_text;
 		bool m_is_toggle;
+
+		Audio_Manager* m_audio;
 	};
 }
 

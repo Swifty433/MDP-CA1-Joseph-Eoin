@@ -50,6 +50,8 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	, m_is_marked_for_removal(false)
 	, m_spawned_pickup(false)
 	, m_audio(&audio)
+	, m_show_explosion(true)
+	,m_explosion(textures.Get(TextureID::kExplosion))
 {
 	if (Table[static_cast<int>(type)].m_has_roll_animation)
 	{
@@ -58,9 +60,14 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	Utility::CentreOrigin(m_sprite);
 
 	//SpawnEnemyCommand
-		//Resource meter set up.
+	//Resource meter set up.
 	m_resource_meter = 0.f;
 	m_spawn_enemy = false;
+
+	m_explosion.SetFrameSize(sf::Vector2i(256, 256));
+	m_explosion.SetNumFrames(16);
+	m_explosion.SetDuration(sf::seconds(1));
+	Utility::CentreOrigin(m_explosion);
 
 	m_spawn_enemy_command.category = static_cast<int>(ReceiverCategories::kScene);
 	m_spawn_enemy_command.action = [this, &textures, &fonts](SceneNode& node, sf::Time)
@@ -274,12 +281,20 @@ sf::FloatRect Aircraft::GetBoundingRect() const
 
 bool Aircraft::IsMarkedForRemoval() const
 {
-	return m_is_marked_for_removal;
+	if (IsDestroyed() && !m_is_marked_for_removal)
+	{
+		m_audio->play_sound(SoundEffects::kExplosion);
+		const_cast<Aircraft*>(this)->m_is_marked_for_removal = true;
+	}
+	return IsDestroyed() && (m_explosion.IsFinished() || !m_show_explosion);
 }
 
 void Aircraft::DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(m_sprite, states);
+	if (IsDestroyed() && m_show_explosion)
+		target.draw(m_explosion, states);
+	else
+		target.draw(m_sprite, states);
 }
 
 void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
@@ -287,7 +302,7 @@ void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 	if (IsDestroyed())
 	{
 		CheckPickupDrop(commands);
-		m_is_marked_for_removal = true;
+		m_explosion.Update(dt);
 		return;
 	}
 	Entity::UpdateCurrent(dt, commands);

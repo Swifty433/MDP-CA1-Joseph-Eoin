@@ -20,8 +20,11 @@ public:
 
 	CommandQueue& GetCommandQueue();
 
-	bool HasAlivePlayer() const;
-	bool HasPlayerReachedEnd() const;
+	//bool HasAlivePlayer() const;
+	//bool HasPlayerReachedEnd() const;
+
+	bool HasGameEnded() const;
+	int GetWinner() const;
 
 private:
 	void LoadTextures();

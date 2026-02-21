@@ -164,14 +164,33 @@ CommandQueue& World::GetCommandQueue()
 	return m_command_queue;
 }
 
-bool World::HasAlivePlayer() const
+//now redundant
+//bool World::HasAlivePlayer() const
+//{
+//	return !m_player_aircraft->IsMarkedForRemoval();
+//}
+//
+//bool World::HasPlayerReachedEnd() const
+//{
+//	return !m_world_bounds.contains(m_player_aircraft->getPosition());
+//}
+
+//new win condition depending on which player is still alive
+bool World::HasGameEnded() const
 {
-	return !m_player_aircraft->IsMarkedForRemoval();
+	return m_player_aircraft->IsMarkedForRemoval() || m_player_aircraft_2->IsMarkedForRemoval();
 }
 
-bool World::HasPlayerReachedEnd() const
+int World::GetWinner() const
 {
-	return !m_world_bounds.contains(m_player_aircraft->getPosition());
+	if (m_player_aircraft->IsMarkedForRemoval())
+	{
+		return 2; // Player 2 wins
+	}
+	else if (m_player_aircraft_2->IsMarkedForRemoval())
+	{
+		return 1; // Player 1 wins
+	}
 }
 
 void World::LoadTextures()
@@ -190,6 +209,7 @@ void World::LoadTextures()
 	m_textures.Load(TextureID::kFinishLine, "Media/Textures/FinishLine.png");
 
 	m_textures.Load(TextureID::kParticle, "Media/Textures/Particle.png");
+	m_textures.Load(TextureID::kExplosion, "Media/Textures/Explosion.png");
 
 }
 
@@ -285,6 +305,9 @@ void World::AdaptPlayerPosition()
 	if (oldposition.x != position.x)
 	{
 		m_shake.Start(sf::seconds(0.3f), 10.f);
+		//Play sound effect for wall collision
+		m_audio->play_sound(SoundEffects::kCollision);
+
 		//knockback speed value
 		const float knockbackVelocity = 500.f;
 
@@ -307,6 +330,9 @@ void World::AdaptPlayerPosition()
 
 	if (oldposition_p2.x != position_p2.x)
 	{
+		//Play sound effect for wall collision
+		m_audio->play_sound(SoundEffects::kCollision);
+
 		//knockback speed value
 		const float knockbackVelocity = 500.f;
 

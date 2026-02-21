@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "animation.hpp"
+
 class Utility
 {
 public:
@@ -11,5 +13,6 @@ public:
 	static double ToDegrees(double angle);
 	static int RandomInt(int exclusive_max);
 	static int Length(sf::Vector2f vector);
+	static void CentreOrigin(Animation& animation);
 };
 
