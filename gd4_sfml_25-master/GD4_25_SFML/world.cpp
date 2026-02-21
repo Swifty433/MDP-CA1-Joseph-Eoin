@@ -29,6 +29,7 @@ World::World(sf::RenderTarget& output_target, FontHolder& font, Audio_Manager& a
 	BuildScene();
 	sf::Vector2f camera_center = sf::Vector2f(m_camera.getSize().x / 2.f, m_world_bounds.size.y - m_camera.getSize().y / 2.f);
 	m_camera.setCenter(camera_center);
+	m_camera_center = m_camera.getCenter();
 }
 
 void World::Update(sf::Time dt)
@@ -39,6 +40,10 @@ void World::Update(sf::Time dt)
 	//m_player_aircraft->SetVelocity(0.f, 0.f);
 
 	// Scroll background
+	//camera always same so I can prop change this
+	
+	
+
 	m_background_scroll += 50.f * dt.asSeconds();
 	sf::Texture& bg_texture = m_textures.Get(TextureID::kLandscape);
 	sf::Vector2u tex_size = bg_texture.getSize();
@@ -126,6 +131,9 @@ void World::Update(sf::Time dt)
 
 	m_scene_graph.Update(dt, m_command_queue);
 	AdaptPlayerPosition();
+
+	
+	m_camera.setCenter(m_camera_center + m_shake.Update(dt));
 }
 
 
@@ -276,12 +284,14 @@ void World::AdaptPlayerPosition()
 	//Checking if the player was snapped back due to colliding with a wall by comparing the positions before and after
 	if (oldposition.x != position.x)
 	{
+		m_shake.Start(sf::seconds(0.3f), 10.f);
 		//knockback speed value
 		const float knockbackVelocity = 500.f;
 
 		//Get current velocity
 		sf::Vector2f velocity = m_player_aircraft->GetVelocity();
 		//based on velocity to see which wall the player hit into then boost the speed in the opposite direction
+		
 		if (velocity.x < 0.f)
 		{
 			velocity.x = knockbackVelocity;

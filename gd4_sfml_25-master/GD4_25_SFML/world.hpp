@@ -7,6 +7,7 @@
 #include "command_queue.hpp"
 #include "bloom_effect.hpp"
 #include "audio_manager.hpp"
+#include "screenshake.hpp"
 
 class SpriteNode;
 
@@ -54,8 +55,11 @@ private:
 	};
 
 private:
+	ScreenShake m_shake;
+	sf::Vector2f m_camera_center;
 	sf::RenderTarget& m_target;
 	sf::RenderTexture m_scene_texture;
+
 	sf::View m_camera;
 	TextureHolder m_textures;
 	FontHolder& m_fonts;
