@@ -45,8 +45,8 @@ private:
 
 	//Meter stats
 	float m_resource_meter = 0.f;
-	float m_resource_meter_max = 200.f;
-	float m_resource_regen = 5.f;
+	float m_resource_meter_max = 125.f;
+	float m_resource_regen = 15.f;
 	float m_resource_cost_spawn_enemy = 20.f;
 	Command m_spawn_enemy_command;
 

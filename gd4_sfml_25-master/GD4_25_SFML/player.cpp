@@ -124,7 +124,7 @@ MissionStatus Player::GetMissionStatus() const
 void Player::InitialiseActions()
 {
     //players accel
-    const float kPlayerAcceleration = 300.f;
+    const float kPlayerAcceleration = 1000.f;
     //Using negative since its backwards to accel left
     //Using positive to accel right
 

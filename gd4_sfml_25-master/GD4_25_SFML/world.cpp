@@ -60,7 +60,7 @@ void World::Update(sf::Time dt)
 
 
 	//Friction Slowing down the player constantly
-	const float kPLayerFriction = 100.f;
+	const float kPLayerFriction = 400.f;
 
 	//Current speed
 	sf::Vector2f playerVelocity = m_player_aircraft->GetVelocity();
@@ -465,7 +465,23 @@ void World::HandleCollisions()
 			aircraft.Damage(projectile.GetDamage());
 			projectile.Destroy();
 		}
-		
+		//Bullet code damaging player 2 helped with copilot.
+		else if (MatchesCategories(pair, ReceiverCategories::kPlayer2Aircraft, ReceiverCategories::kAlliedProjectile)) {
+			auto& player2 = static_cast<Aircraft&>(*pair.first);
+			auto& projectile = static_cast<Projectile&>(*pair.second);	
+
+			//Collision response
+			player2.Damage(projectile.GetDamage());
+			projectile.Destroy();
+		}
+		//misile code when colliding with player 2 helped with copilot.
+		else if (MatchesCategories(pair, ReceiverCategories::kPlayer2Aircraft, ReceiverCategories::kEnemyProjectile)) {
+			auto& player2 = static_cast<Aircraft&>(*pair.first);
+			auto& projectile = static_cast<Projectile&>(*pair.second);
+			//Collision response
+			player2.Damage(projectile.GetDamage());
+			projectile.Destroy();
+		}
 	}
 }
 
