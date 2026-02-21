@@ -6,6 +6,7 @@
 #include "projectile_type.hpp"
 #include "command_queue.hpp"
 #include "audio_manager.hpp"
+#include "animation.hpp"
 
 class Aircraft : public Entity
 {
@@ -66,10 +67,9 @@ private:
 	void CheckPickupDrop(CommandQueue& commands);
 	void UpdateRollAnimation();
 
-
-
 	AircraftType m_type;
 	sf::Sprite m_sprite;
+	Animation m_explosion;
 
 	TextNode* m_health_display;
 	TextNode* m_missile_display;

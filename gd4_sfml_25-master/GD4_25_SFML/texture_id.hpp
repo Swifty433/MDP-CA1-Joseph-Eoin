@@ -19,4 +19,5 @@ enum class TextureID
 	kNumTextures,
 	kParticle,
 	kAltBackground,
+	kExplosion,
 };
