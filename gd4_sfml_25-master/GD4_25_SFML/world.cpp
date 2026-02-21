@@ -296,6 +296,9 @@ void World::AdaptPlayerPosition()
 	//Checking if the player was snapped back due to colliding with a wall by comparing the positions before and after
 	if (oldposition.x != position.x)
 	{
+		//Play sound effect for wall collision
+		m_audio->play_sound(SoundEffects::kCollision);
+
 		//knockback speed value
 		const float knockbackVelocity = 500.f;
 
@@ -317,6 +320,9 @@ void World::AdaptPlayerPosition()
 
 	if (oldposition_p2.x != position_p2.x)
 	{
+		//Play sound effect for wall collision
+		m_audio->play_sound(SoundEffects::kCollision);
+
 		//knockback speed value
 		const float knockbackVelocity = 500.f;
 

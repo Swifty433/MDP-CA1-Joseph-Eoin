@@ -14,7 +14,9 @@ enum class Music
 enum class SoundEffects
 {
 	kShoot,
-	kButtonClick
+	kButtonClick,
+	kExplosion,
+	kCollision
 };
 
 class Audio_Manager

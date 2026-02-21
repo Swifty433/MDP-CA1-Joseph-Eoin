@@ -30,6 +30,8 @@ Audio_Manager::Audio_Manager()
 
 	load_sound(SoundEffects::kShoot, "Media/Audio/Shoot.wav");
 	load_sound(SoundEffects::kButtonClick, "Media/Audio/ButtonClick.wav");
+	load_sound(SoundEffects::kExplosion, "Media/Audio/Explosion.wav");
+	load_sound(SoundEffects::kCollision, "Media/Audio/Collision.wav");
 
 }
 

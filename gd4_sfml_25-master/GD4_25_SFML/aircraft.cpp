@@ -281,6 +281,11 @@ sf::FloatRect Aircraft::GetBoundingRect() const
 
 bool Aircraft::IsMarkedForRemoval() const
 {
+	if (IsDestroyed() && !m_is_marked_for_removal)
+	{
+		m_audio->play_sound(SoundEffects::kExplosion);
+		const_cast<Aircraft*>(this)->m_is_marked_for_removal = true;
+	}
 	return IsDestroyed() && (m_explosion.IsFinished() || !m_show_explosion);
 }
 

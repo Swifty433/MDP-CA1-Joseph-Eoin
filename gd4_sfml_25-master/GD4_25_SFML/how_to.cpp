@@ -15,11 +15,15 @@ HowToState::HowToState(StateStack& stack, Context context)
 	m_title_text.setPosition(sf::Vector2f(512.f, 100.f));
 
 	std::string info = "HOW TO PLAY!";
-	info += "\n\n- Use the arrow keys to move your character.";
+	info += "\n\n- Use the arrow keys to move Player 1.";
+	info += "\n\n- Use the W & D to move Player 2";
+	info += "\n\n- Player 1 can shoot at Player 2 ships";
+	info += "\n\n- Player 2 can spawn ships to attack Player 1";
+	info += "\n\n- Check out SETTINGS to change Player controls";
 	m_howto_text.setFillColor(sf::Color::Black);
 	m_howto_text.setString(info);
 	m_howto_text.setCharacterSize(20);
-	m_howto_text.setPosition(sf::Vector2f(200.f, 280.f));
+	m_howto_text.setPosition(sf::Vector2f(300.f, 200.f));
 
 	auto back_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio);
 	back_button->setPosition(sf::Vector2f(80.f, 575.f));
