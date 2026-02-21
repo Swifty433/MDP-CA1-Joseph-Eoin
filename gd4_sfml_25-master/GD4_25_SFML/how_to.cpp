@@ -21,7 +21,7 @@ HowToState::HowToState(StateStack& stack, Context context)
 	m_howto_text.setCharacterSize(20);
 	m_howto_text.setPosition(sf::Vector2f(200.f, 280.f));
 
-	auto back_button = std::make_shared<gui::Button>(*context.fonts, *context.textures);
+	auto back_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio);
 	back_button->setPosition(sf::Vector2f(80.f, 575.f));
 	back_button->SetCallback(std::bind(&HowToState::RequestStackPop, this));
 	back_button->SetText("Back to Menu");

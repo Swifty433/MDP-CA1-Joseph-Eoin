@@ -3,7 +3,7 @@
 
 GameState::GameState(StateStack& stack, Context context) : State(stack, context), m_world(*context.window, *context.fonts, *context.audio), m_player(*context.player), m_player_2(*context.player_2)
 {
-
+	context.audio->play_music(Music::kLevelMusic);
 }
 
 void GameState::Draw()
@@ -25,6 +25,7 @@ bool GameState::Update(sf::Time dt)
 	//	RequestStackPush(StateID::kGameOver);
 	//}
 
+	//checking to see who the winner is and then displaying the appropriate game over screen
 	if (m_world.HasGameEnded())
 	{
 		int winner = m_world.GetWinner();

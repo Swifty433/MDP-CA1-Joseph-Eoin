@@ -1,14 +1,16 @@
 #include "button.hpp"
 #include "fontID.hpp"
 #include "utility.hpp"
+#include "audio_manager.hpp"
 
-gui::Button::Button(const FontHolder& fonts, const TextureHolder& textures)
+gui::Button::Button(const FontHolder& fonts, const TextureHolder& textures, Audio_Manager& audio)
     : m_normal_texture(textures.Get(TextureID::kButtonNormal))
     , m_selected_texture(textures.Get(TextureID::kButtonSelected))
     , m_activated_texture(textures.Get(TextureID::kButtonActivated))
     , m_text(fonts.Get(FontID::kMain), "", 16)
     , m_is_toggle(false)
     , m_sprite(textures.Get(TextureID::kButtonNormal))
+    , m_audio(&audio)
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
     m_text.setPosition(sf::Vector2f(bounds.size.x / 2, bounds.size.y / 2));
@@ -54,6 +56,7 @@ void gui::Button::Activate()
     {
         m_sprite.setTexture(m_activated_texture);
     }
+    m_audio->play_sound(SoundEffects::kButtonClick);
     if (m_callback)
     {
         m_callback();
