@@ -22,7 +22,9 @@ https://pixabay.com/sound-effects/film-special-effects-plasma-bounce-357127/
 _**Art Assets**_
 
 Enemy 1: https://proassets-ia.itch.io/32-rpg-monsters-16-bit-pixel-art-sprite-pack-for-retro-games
+
 Enemy 2: https://ccbmwiki.miraheze.org/wiki/Alien
+
 Enemy 3: https://pixellicker.com/questin_boss_spider_4x/
 
 **Menu Background**
