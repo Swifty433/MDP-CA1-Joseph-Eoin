@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 // Bloom effect implementation - this was taken from johns github page as it was done in class!
 #pragma once
 #include "posteffect.hpp"

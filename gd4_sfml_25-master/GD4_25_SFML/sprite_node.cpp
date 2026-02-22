@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 #include "sprite_node.hpp"
 
 SpriteNode::SpriteNode(const sf::Texture& texture):m_sprite(texture)

@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //Autored by Joseph Byrne 
 #pragma once
 #include "state.hpp"

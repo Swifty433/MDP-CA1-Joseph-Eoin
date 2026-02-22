@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //edited by joseph byrne
 #include "game_state.hpp"
 #include "mission_status.hpp"

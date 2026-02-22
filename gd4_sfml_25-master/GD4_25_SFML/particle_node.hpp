@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //Particle node class for handling the particles in the game - johns code from github
 #pragma once
 #include "scene_node.hpp"

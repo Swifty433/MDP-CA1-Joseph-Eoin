@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 // particle stuct for storing the particle data - johns code from github
 #pragma once
 #include "particletype.hpp"

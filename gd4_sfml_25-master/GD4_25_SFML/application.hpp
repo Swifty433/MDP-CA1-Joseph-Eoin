@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //edited by Joseph Byrne
 #pragma once
 #include <SFML/System/Clock.hpp>

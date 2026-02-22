@@ -1,4 +1,6 @@
-//TODO ?? can we preinstantiate each type and write as .hpp and .cpp
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 #pragma once
 #include "resource_holder.hpp"
 #include <string>

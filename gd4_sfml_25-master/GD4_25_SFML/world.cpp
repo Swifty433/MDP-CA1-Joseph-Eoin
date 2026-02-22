@@ -1,3 +1,9 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
+//Eoin set camera to be still, Applying friciton, Wall bounce mechanic, Handle collision for player 2 bullets and missile
+// + player 1 and 2 set up
+
 //edited by Joseph Byrne
 #include "world.hpp"
 #include "sprite_node.hpp"
@@ -63,7 +69,7 @@ void World::Update(sf::Time dt)
 	{
 		m_scene_graph.OnCommand(m_command_queue.Pop(), dt);
 	}
-
+	//Eoin created the friction code with (help from copilot for help with applying the friction every frame)
 
 	//Friction Slowing down the player constantly
 	const float kPLayerFriction = 400.f;
@@ -215,7 +221,7 @@ void World::LoadTextures()
 	m_textures.Load(TextureID::kParticle, "Media/Textures/Particle.png");
 	m_textures.Load(TextureID::kExplosion, "Media/Textures/Explosion.png");
 
-	//new enemy textures
+	//new enemy textures eoin added this
 	m_textures.Load(TextureID::kRaptorFast, "Media/Textures/kRaptorFast.png");
 	m_textures.Load(TextureID::kRaptorSlow, "Media/Textures/EnemyShipSlow.png");
 
@@ -248,7 +254,7 @@ void World::BuildScene()
 	std::unique_ptr<SpriteNode> finish_sprite(new SpriteNode(finish_texture));
 	finish_sprite->setPosition(sf::Vector2f(0.f, -76.f));
 	m_scene_layers[static_cast<int>(SceneLayers::kBackground)]->AttachChild(std::move(finish_sprite));
-
+	
 	//setting up player 1
 	std::unique_ptr<Aircraft> leader(new Aircraft(AircraftType::kEagle, m_textures, m_fonts, *m_audio)); //added audio to the aircraft
 	m_player_aircraft = leader.get();
@@ -257,7 +263,8 @@ void World::BuildScene()
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader));
 
-	//setting up player 2
+	
+	//Eoin made code for setting up player 2
 	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kPlayer2Ship, m_textures, m_fonts, *m_audio)); //added audio to the aircraft
 	m_player_aircraft_2 = leader_2.get();
 	m_player_aircraft_2->setPosition(m_spawn_position_2);
@@ -309,7 +316,7 @@ void World::AdaptPlayerPosition()
 	position_p2.y = std::max(position_p2.y, view_bounds.position.y + border_distance);
 	m_player_aircraft_2->setPosition(position_p2);
 
-	//WALL BOUNCE MECHANIC
+	//WALL BOUNCE MECHANIC made by Eoin Hamill
 
 	//Checking if the player was snapped back due to colliding with a wall by comparing the positions before and after
 	if (oldposition.x != position.x)

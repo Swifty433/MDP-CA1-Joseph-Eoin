@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 #pragma once
 #include <functional>
 #include "receiver_categories.hpp"

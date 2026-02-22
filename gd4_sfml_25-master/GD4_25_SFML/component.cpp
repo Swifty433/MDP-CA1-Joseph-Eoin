@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 #include "Component.hpp"
 
 gui::Component::Component() : m_is_selected(false), m_is_active(false)

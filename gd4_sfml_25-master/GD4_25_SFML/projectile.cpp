@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 #include "projectile.hpp"
 #include "data_tables.hpp"
 #include "utility.hpp"

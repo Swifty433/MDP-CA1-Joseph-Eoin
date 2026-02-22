@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 #include "texture_holder.hpp"
 
 void TextureHolder::Load(const TextureID id, const std::string& filename)

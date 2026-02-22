@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //emmiter node implementation this is johns code pulled from his github page.
 #pragma once
 #include "scene_node.hpp"

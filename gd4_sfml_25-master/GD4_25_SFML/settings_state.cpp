@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //edited by Jopseph Byrne
 #include "settings_state.hpp"
 #include "Utility.hpp"

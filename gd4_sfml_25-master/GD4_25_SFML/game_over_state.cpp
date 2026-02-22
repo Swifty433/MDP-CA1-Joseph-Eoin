@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //edited by joseph byrne
 #include "game_over_state.hpp"
 #include "utility.hpp"

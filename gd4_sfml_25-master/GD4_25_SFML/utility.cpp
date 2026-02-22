@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //edited by joseph Byrne
 #include "Utility.hpp"
 #define _USE_MATH_DEFINES

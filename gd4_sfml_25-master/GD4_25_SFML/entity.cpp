@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 #include "Entity.hpp"
 #include "command_queue.hpp"
 
@@ -59,6 +62,7 @@ bool Entity::IsDestroyed() const
 	return m_hitpoints <= 0;
 }
 
+//moving based on velocity
 void Entity::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 {
 	move(m_velocity * dt.asSeconds());

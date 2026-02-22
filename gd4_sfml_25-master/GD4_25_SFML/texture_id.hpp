@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //edited by joseph Byrne
 #pragma once
 enum class TextureID

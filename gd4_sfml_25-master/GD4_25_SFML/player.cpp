@@ -1,3 +1,9 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
+//Eoin set up acceleration based movement. Friciton is applied in world.
+//Also set up player 2 inputs also the spawn enemy code.
+
 //Edited by joseph byrne
 #include "player.hpp"
 #include "aircraft.hpp"
@@ -29,9 +35,6 @@ Player::Player(int player_num)
     {
         m_key_binding[sf::Keyboard::Scancode::Left] = Action::kMoveLeft;
         m_key_binding[sf::Keyboard::Scancode::Right] = Action::kMoveRight;
-        //No need for up and down movement so I commented it out for now.
-        //m_key_binding[sf::Keyboard::Scancode::W] = Action::kMoveUp;
-        //m_key_binding[sf::Keyboard::Scancode::S] = Action::kMoveDown;
         m_key_binding[sf::Keyboard::Scancode::Up] = Action::kBulletFire;
         m_key_binding[sf::Keyboard::Scancode::Down] = Action::kMissileFire;
     }

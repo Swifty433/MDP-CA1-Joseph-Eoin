@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 // Animation class implementation. this was taken from johns github page as it was done in class!
 #include "animation.hpp"
 #include <SFML/Graphics/Texture.hpp>

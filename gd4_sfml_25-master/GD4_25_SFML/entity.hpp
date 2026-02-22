@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161s
+
 #pragma once
 #include "scene_node.hpp"
 

@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 // post effect to apply a shader to a target - johns code from github
 #pragma once
 

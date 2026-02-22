@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 // Post effect class to apply a shader to a target - johns code from github
 #include "PostEffect.hpp"
 #include <SFML/Graphics/Shader.hpp>

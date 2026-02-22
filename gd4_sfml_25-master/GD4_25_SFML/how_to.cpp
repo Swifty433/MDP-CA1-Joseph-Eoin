@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 //Autored by Joseph Byrne, How to Menu state for the game, which can be accessed from the main menu. whihc tells the player how to play the game.
 #include "how_to.hpp"
 #include "utility.hpp"

@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 // defines the shader types used in the project johns code from github
 #pragma once
 enum class ShaderTypes

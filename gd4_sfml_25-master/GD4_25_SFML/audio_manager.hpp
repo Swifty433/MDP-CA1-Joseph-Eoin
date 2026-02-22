@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 // Audio code was done by Joseph Byrne, with some help from SFML documentation. It handles Music and Sound Effects, as well as muting audio.
 // The use of .wav files for sound assets and .flac files for larger music files!
 #pragma once

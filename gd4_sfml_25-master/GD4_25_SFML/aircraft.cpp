@@ -1,3 +1,8 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
+//Eoin set up player 2s ship + the resource meter and how it interacts with spawning enemies.
+
 //edited by Joseph Byrne
 #include "aircraft.hpp"
 #include "texture_id.hpp"
@@ -114,6 +119,7 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	m_health_display = health_display.get();
 	AttachChild(std::move(health_display));
 
+	//If its player 2 ship we add the resource meter.
 	if (type == AircraftType::kPlayer2Ship)
 	{
 		std::string* resource = new std::string("");
@@ -363,7 +369,7 @@ void Aircraft::CheckProjectileLaunch(sf::Time dt, CommandQueue& commands)
 	}
 }
 
-//checking if the aircraft is allied for player 1 and player 2
+//checking if the aircraft is allied for player 1 and player 2 editted by eoin hamill
 bool Aircraft::IsAllied() const
 {
 	return m_type == AircraftType::kEagle || m_type == AircraftType::kPlayer2Ship;

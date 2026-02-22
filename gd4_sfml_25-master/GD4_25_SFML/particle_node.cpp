@@ -1,3 +1,6 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
 // particle node implementation file for handling the particles in the game - johns code from github
 #include "particle_node.hpp"
 #include "data_tables.hpp"

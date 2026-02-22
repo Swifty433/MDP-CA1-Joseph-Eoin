@@ -1,3 +1,8 @@
+//Eoin Hamill D00258444
+//Joseph Bryne D00255161
+
+//Eoin added in section for player 2s aliens editing the original and adding two more the the two other aliens. Including scale and spawn cost now.
+
 //edited by Josph Byrne
 #include "data_tables.hpp"
 #include "aircraft_type.hpp"
