@@ -11,7 +11,7 @@ std::vector<AircraftData> InitializeAircraftData()
 	std::vector<AircraftData> data(static_cast<int>(AircraftType::kAircraftCount));
 
 	//Player 1 Aircraft
-	data[static_cast<int>(AircraftType::kEagle)].m_hitpoints = 100;
+	data[static_cast<int>(AircraftType::kEagle)].m_hitpoints = 10;
 	data[static_cast<int>(AircraftType::kEagle)].m_speed = 200.f;
 	data[static_cast<int>(AircraftType::kEagle)].m_fire_interval = sf::seconds(1);
 	data[static_cast<int>(AircraftType::kEagle)].m_texture = TextureID::kEagle;
@@ -21,14 +21,33 @@ std::vector<AircraftData> InitializeAircraftData()
 	data[static_cast<int>(AircraftType::kEagle)].m_has_roll_animation = true;
 
 	//Enemies
-	data[static_cast<int>(AircraftType::kRaptor)].m_hitpoints = 20;
-	data[static_cast<int>(AircraftType::kRaptor)].m_speed = 80.f;
+	data[static_cast<int>(AircraftType::kRaptor)].m_hitpoints = 30;
+	data[static_cast<int>(AircraftType::kRaptor)].m_speed = 200.f;
 	data[static_cast<int>(AircraftType::kRaptor)].m_fire_interval = sf::Time::Zero;
 	data[static_cast<int>(AircraftType::kRaptor)].m_texture = TextureID::kRaptor;
 
 	data[static_cast<int>(AircraftType::kRaptor)].m_directions.emplace_back(Direction(+45.f, 80.f));
 	data[static_cast<int>(AircraftType::kRaptor)].m_directions.emplace_back(Direction(-45.f, 160.f));
 	data[static_cast<int>(AircraftType::kRaptor)].m_directions.emplace_back(Direction(+45.f, 80.f));
+	data[static_cast<int>(AircraftType::kRaptor)].m_scale = 0.1f;
+	data[static_cast<int>(AircraftType::kRaptor)].m_spawn_cost = 20.f;
+
+	//Enemy 2 faster. but low hitpoints
+	data[static_cast<int>(AircraftType::kRaptorFast)] = data[static_cast<int>(AircraftType::kRaptor)];
+	data[static_cast<int>(AircraftType::kRaptorFast)].m_speed = 500.f;
+	data[static_cast<int>(AircraftType::kRaptorFast)].m_texture = TextureID::kRaptorFast;
+	data[static_cast<int>(AircraftType::kRaptorFast)].m_hitpoints = 10;
+	data[static_cast<int>(AircraftType::kRaptorFast)].m_spawn_cost = 15.f;
+	data[static_cast<int>(AircraftType::kRaptorFast)].m_scale = 0.1f;
+
+	//Enemy 3 slower but tanky
+	data[static_cast<int>(AircraftType::kRaptorSlow)] = data[static_cast<int>(AircraftType::kRaptor)];
+	data[static_cast<int>(AircraftType::kRaptorSlow)].m_speed = 100.f;
+	data[static_cast<int>(AircraftType::kRaptorSlow)].m_texture = TextureID::kRaptorSlow;
+	data[static_cast<int>(AircraftType::kRaptorSlow)].m_hitpoints = 500;
+	data[static_cast<int>(AircraftType::kRaptorSlow)].m_spawn_cost = 125.f;
+	data[static_cast<int>(AircraftType::kRaptorSlow)].m_scale = 1.1f;
+
 	
 	//player 2 aircraft
 	//added player 2 ship type with same stats as player 1
@@ -65,7 +84,7 @@ std::vector<PickupData> InitializePickupData()
 	data[static_cast<int>(PickupType::kHealthRefill)].m_texture = TextureID::kHealthRefill;
 	data[static_cast<int>(PickupType::kHealthRefill)].m_action = [](Aircraft& a)
 		{
-			a.Repair(25);
+			a.Repair(5);
 		};
 
 	data[static_cast<int>(PickupType::kMissileRefill)].m_texture = TextureID::kMissileRefill;

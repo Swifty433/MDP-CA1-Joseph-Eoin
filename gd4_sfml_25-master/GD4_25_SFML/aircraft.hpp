@@ -25,7 +25,7 @@ public:
 	void UpdateMovementPattern(sf::Time dt);
 
 	//Meter Methods
-	void RequestSpawnEnemy();
+	void RequestSpawnEnemy(AircraftType type = AircraftType::kRaptor);
 	float GetResourceMeter() const { return m_resource_meter; }
 
 	float GetMaxSpeed() const;
@@ -48,7 +48,7 @@ private:
 	//Meter stats
 	float m_resource_meter = 0.f;
 	float m_resource_meter_max = 125.f;
-	float m_resource_regen = 15.f;
+	float m_resource_regen = 25.f;
 	float m_resource_cost_spawn_enemy = 20.f;
 	Command m_spawn_enemy_command;
 
@@ -100,5 +100,9 @@ private:
 	bool m_show_explosion;
 
 	Audio_Manager* m_audio;
+
+	
+
+	AircraftType m_pending_spawn_type = AircraftType::kRaptor;
 };
 

@@ -160,7 +160,22 @@ void Player::InitialiseActions()
     m_action_binding[Action::kSpawnAlienPlayer2].action =
         DerivedAction<Aircraft>([](Aircraft& a, sf::Time)
             {
-                a.RequestSpawnEnemy();
+                a.RequestSpawnEnemy(AircraftType::kRaptor);
+            });
+
+
+    //Player 2  spawn second alien
+    m_action_binding[Action::kSpawnAlien2Player2].action =
+        DerivedAction<Aircraft>([](Aircraft& a, sf::Time)
+            {
+                a.RequestSpawnEnemy(AircraftType::kRaptorFast);
+            });
+
+    //Player 2  spawn third alien
+    m_action_binding[Action::kSpawnAlien3Player2].action =
+        DerivedAction<Aircraft>([](Aircraft& a, sf::Time)
+            {
+                a.RequestSpawnEnemy(AircraftType::kRaptorSlow);
             });
 
 }

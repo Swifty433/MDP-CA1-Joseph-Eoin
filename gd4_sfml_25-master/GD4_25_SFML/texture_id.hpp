@@ -5,7 +5,8 @@ enum class TextureID
 	kLandscape,
 	kEagle,
 	kRaptor,
-	//Player 2 ship texture added
+	kRaptorFast,
+	kRaptorSlow,
 	kPlayer2Ship,
 	kTitleScreen,
 	kButtonNormal,

@@ -4,8 +4,11 @@
 enum class AircraftType
 {
 	kEagle,
+	//Enemies
 	kRaptor,
-	//added player 2 ship type
+	kRaptorFast,
+	kRaptorSlow,
+
 	kPlayer2Ship,
 	kAircraftCount
 };

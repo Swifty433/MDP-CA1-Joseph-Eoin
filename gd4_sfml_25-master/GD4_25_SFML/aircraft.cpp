@@ -63,6 +63,11 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 		m_sprite.setTextureRect(Table[static_cast<int>(type)].m_texture_rect);
 	}
 	Utility::CentreOrigin(m_sprite);
+	m_sprite.setScale(
+		sf::Vector2f(Table[static_cast<int>(type)].m_scale,
+			Table[static_cast<int>(type)].m_scale)
+	);
+		
 
 	//SpawnEnemyCommand
 	//Resource meter set up.
@@ -80,7 +85,7 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 		{
 			sf::Vector2f p = this->GetWorldPosition();
 
-			std::unique_ptr<Aircraft> enemy(new Aircraft(AircraftType::kRaptor, textures, fonts, *m_audio));
+			std::unique_ptr<Aircraft> enemy(new Aircraft(m_pending_spawn_type, textures, fonts, *m_audio));
 			enemy->setPosition(sf::Vector2f(p.x, p.y + 60.f));
 
 			node.AttachChild(std::move(enemy));
@@ -428,8 +433,9 @@ void Aircraft::CheckEnemySpawn(CommandQueue& commands)
 
 //Spawning Enemy with resource meter
 //Request to spawn
-void Aircraft::RequestSpawnEnemy()
+void Aircraft::RequestSpawnEnemy(AircraftType type)
 {
+	m_pending_spawn_type = type;
 	m_spawn_requested = true;
 }
 
@@ -444,13 +450,16 @@ void Aircraft::UpdateResourceMeter(sf::Time dt)
 //Check if you got enough to spawn enemy.
 void Aircraft::TrySpawnEnemy(CommandQueue& commands)
 {
-	if (m_spawn_requested && m_resource_meter >= m_resource_cost_spawn_enemy)
+	const float cost = Table[static_cast<int>(m_pending_spawn_type)].m_spawn_cost;
+	if (m_spawn_requested && m_resource_meter >= cost)
 	{
-		m_resource_meter -= m_resource_cost_spawn_enemy;
+		m_resource_meter -= cost;
 		commands.Push(m_spawn_enemy_command);
 	}
 
 	m_spawn_requested=false;
 }
+
+
 
 
