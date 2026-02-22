@@ -21,6 +21,10 @@ https://pixabay.com/sound-effects/film-special-effects-plasma-bounce-357127/
 
 _**Art Assets**_
 
+Enemy 1: https://proassets-ia.itch.io/32-rpg-monsters-16-bit-pixel-art-sprite-pack-for-retro-games
+Enemy 2: https://ccbmwiki.miraheze.org/wiki/Alien
+Enemy 3: https://pixellicker.com/questin_boss_spider_4x/
+
 **Menu Background**
 https://www.freepik.com/free-vector/pixel-art-mystical-background_29019077.htm#fromView=keyword&page=2&position=12&uuid=56a50947-bf0f-45db-ba6c-072e2157ac22&query=8+bit+space+wallpaper
 
