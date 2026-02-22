@@ -197,7 +197,7 @@ int World::GetWinner() const
 void World::LoadTextures()
 {
 	m_textures.Load(TextureID::kEagle, "Media/Textures/ShipAltSpriteSheet.png");
-	m_textures.Load(TextureID::kRaptor, "Media/Textures/EnemyShipAlt.png");
+	m_textures.Load(TextureID::kRaptor, "Media/Textures/kRaptor.png");
 	m_textures.Load(TextureID::kPlayer2Ship, "Media/Textures/Raptor.png");
 	m_textures.Load(TextureID::kLandscape, "Media/Textures/Background.png");
 	m_textures.Load(TextureID::kBullet, "Media/Textures/Bullet.png");
@@ -211,6 +211,10 @@ void World::LoadTextures()
 
 	m_textures.Load(TextureID::kParticle, "Media/Textures/Particle.png");
 	m_textures.Load(TextureID::kExplosion, "Media/Textures/Explosion.png");
+
+	//new enemy textures
+	m_textures.Load(TextureID::kRaptorFast, "Media/Textures/kRaptorFast.png");
+	m_textures.Load(TextureID::kRaptorSlow, "Media/Textures/EnemyShipSlow.png");
 
 }
 
@@ -336,7 +340,7 @@ void World::AdaptPlayerPosition()
 		m_audio->play_sound(SoundEffects::kCollision);
 
 		//knockback speed value
-		const float knockbackVelocity = 100.f;
+		const float knockbackVelocity = 1000.f;
 
 		//Get current velocity
 		sf::Vector2f velocity = m_player_aircraft_2->GetVelocity();

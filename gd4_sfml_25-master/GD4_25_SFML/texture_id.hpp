@@ -4,6 +4,8 @@ enum class TextureID
 	kLandscape,
 	kEagle,
 	kRaptor,
+	kRaptorFast,
+	kRaptorSlow,
 	kPlayer2Ship,
 	kTitleScreen,
 	kButtonNormal,

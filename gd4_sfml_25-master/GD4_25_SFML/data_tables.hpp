@@ -23,6 +23,9 @@ struct AircraftData
 	sf::IntRect m_texture_rect;
 	std::vector<Direction> m_directions;
 	bool m_has_roll_animation;
+
+	float m_scale = 1.f;
+	float m_spawn_cost = 20.f;
 };
 
 struct ProjectileData
