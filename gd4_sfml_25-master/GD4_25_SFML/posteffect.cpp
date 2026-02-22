@@ -1,3 +1,4 @@
+// Post effect class to apply a shader to a target - johns code from github
 #include "PostEffect.hpp"
 #include <SFML/Graphics/Shader.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

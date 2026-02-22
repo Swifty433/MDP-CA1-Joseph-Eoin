@@ -1,3 +1,4 @@
+//edited by joseph byrne
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "resource_identifiers.hpp"
@@ -20,9 +21,11 @@ public:
 
 	CommandQueue& GetCommandQueue();
 
+	//redundant
 	//bool HasAlivePlayer() const;
 	//bool HasPlayerReachedEnd() const;
 
+	//new functions to check if the game has ended and to get the winner of the game
 	bool HasGameEnded() const;
 	int GetWinner() const;
 
@@ -81,11 +84,14 @@ private:
 	std::vector<SpawnPoint> m_enemy_spawn_points;
 	std::vector<Aircraft*> m_active_enemies;
 
+	//johns new bloom effect for post processing
 	BloomEffect m_bloom_effect;
 
+	//variable to track the scrolling of the background.
 	float m_background_scroll;
-	SpriteNode* m_background_node;
 
+	SpriteNode* m_background_node;
+	//added the audio manager to the class to be able to use it for aircraft and music and sounds.
 	Audio_Manager* m_audio;
 };
 

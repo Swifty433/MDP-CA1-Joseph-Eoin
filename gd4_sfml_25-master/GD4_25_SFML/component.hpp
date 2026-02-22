@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #pragma once
 #include <SFML/Graphics.hpp>
 
@@ -21,6 +22,7 @@ namespace gui
 
 		virtual void HandleEvent(const sf::Event& event) = 0;
 
+		// setting up the constructor for the getLocalBounds function.
 		virtual sf::FloatRect getLocalBounds() const = 0;
 
 	private:

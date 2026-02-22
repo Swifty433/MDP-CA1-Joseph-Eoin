@@ -1,3 +1,4 @@
+//edited by joseph Byrne
 #pragma once
 #include "entity.hpp"
 #include "aircraft_type.hpp"
@@ -65,10 +66,12 @@ private:
 	bool IsAllied() const;
 	void CreatePickup(SceneNode& node, const TextureHolder& textures);
 	void CheckPickupDrop(CommandQueue& commands);
+	//roll animation for player ship
 	void UpdateRollAnimation();
 
 	AircraftType m_type;
 	sf::Sprite m_sprite;
+	//Explosion animation
 	Animation m_explosion;
 
 	TextNode* m_health_display;
@@ -93,6 +96,7 @@ private:
 	sf::Time m_fire_countdown;
 
 	bool m_is_marked_for_removal;
+	//explosion animation 
 	bool m_show_explosion;
 
 	Audio_Manager* m_audio;

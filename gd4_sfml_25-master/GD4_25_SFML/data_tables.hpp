@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #pragma once
 #include "texture_id.hpp"
 #include "particletype.hpp"
@@ -20,8 +21,10 @@ struct AircraftData
 	float m_speed;
 	TextureID m_texture;
 	sf::Time m_fire_interval;
+	//added the texture rect for the roll animation of the player 1 ship.
 	sf::IntRect m_texture_rect;
 	std::vector<Direction> m_directions;
+	//added the bool for the roll animation of the player 1 ship.
 	bool m_has_roll_animation;
 };
 
@@ -40,6 +43,7 @@ struct PickupData
 	sf::IntRect m_texture_rect;
 };
 
+//johns partical data but couldnt get working within our game.
 struct ParticleData
 {
 	sf::Color m_color;
@@ -49,6 +53,7 @@ struct ParticleData
 std::vector<AircraftData> InitializeAircraftData();
 std::vector<ProjectileData> InitializeProjectileData();
 std::vector<PickupData> InitializePickupData();
+//initialiser for the particle data.
 std::vector<ParticleData> InitializeParticleData();
 
 

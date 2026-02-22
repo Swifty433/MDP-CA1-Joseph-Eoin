@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #include "world.hpp"
 #include "sprite_node.hpp"
 #include <iostream>
@@ -8,7 +9,8 @@
 #include "particle_node.hpp"
 #include "particletype.hpp"
 
-World::World(sf::RenderTarget& output_target, FontHolder& font, Audio_Manager& audio)
+World::World(sf::RenderTarget& output_target, FontHolder& font, Audio_Manager& audio) //added audio manager refrence
+	//changed from m_window(window) to m_target(output_target) - johns github
 	: m_target(output_target)
 	, m_camera(output_target.getDefaultView())
 	, m_textures()
@@ -22,6 +24,7 @@ World::World(sf::RenderTarget& output_target, FontHolder& font, Audio_Manager& a
 	, m_player_aircraft(nullptr)
 	, m_player_aircraft_2(nullptr)
 	, m_background_scroll(0.f)
+	//audio manager added to class 
 	, m_audio(&audio)
 {
 	m_scene_texture.resize({ m_target.getSize().x, m_target.getSize().y });
@@ -41,9 +44,7 @@ void World::Update(sf::Time dt)
 
 	// Scroll background
 	//camera always same so I can prop change this
-	
-	
-
+	//scrolling background by changing the texture rect of the background it give the illusion that it is scrolling 
 	m_background_scroll -= 50.f * dt.asSeconds();
 	sf::Texture& bg_texture = m_textures.Get(TextureID::kLandscape);
 	sf::Vector2u tex_size = bg_texture.getSize();
@@ -137,7 +138,7 @@ void World::Update(sf::Time dt)
 }
 
 
-
+//johns new draw function that applies the bloom post proccessing 
 void World::Draw()
 {
 	if (PostEffect::IsSupported())
@@ -181,6 +182,7 @@ bool World::HasGameEnded() const
 	return m_player_aircraft->IsMarkedForRemoval() || m_player_aircraft_2->IsMarkedForRemoval();
 }
 
+//returns the winner of the game based on which player is still alive
 int World::GetWinner() const
 {
 	if (m_player_aircraft->IsMarkedForRemoval())
@@ -194,6 +196,7 @@ int World::GetWinner() const
 	
 }
 
+// loads all the textures into the texture holder so they can be used across the game
 void World::LoadTextures()
 {
 	m_textures.Load(TextureID::kEagle, "Media/Textures/ShipAltSpriteSheet.png");
@@ -243,19 +246,21 @@ void World::BuildScene()
 	m_scene_layers[static_cast<int>(SceneLayers::kBackground)]->AttachChild(std::move(finish_sprite));
 
 	//setting up player 1
-	std::unique_ptr<Aircraft> leader(new Aircraft(AircraftType::kEagle, m_textures, m_fonts, *m_audio));
+	std::unique_ptr<Aircraft> leader(new Aircraft(AircraftType::kEagle, m_textures, m_fonts, *m_audio)); //added audio to the aircraft
 	m_player_aircraft = leader.get();
 	m_player_aircraft->setPosition(m_spawn_position);
 	m_player_aircraft->SetPlayerid(1);
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader));
 
-	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kPlayer2Ship, m_textures, m_fonts, *m_audio));
+	//setting up player 2
+	std::unique_ptr<Aircraft> leader_2(new Aircraft(AircraftType::kPlayer2Ship, m_textures, m_fonts, *m_audio)); //added audio to the aircraft
 	m_player_aircraft_2 = leader_2.get();
 	m_player_aircraft_2->setPosition(m_spawn_position_2);
 	m_player_aircraft_2->SetPlayerid(2);
 	//m_player_aircraft->SetVelocity(40.f, m_scroll_speed);
 	m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(leader_2));
+	//tried using the KUpperAir and Lower Air but couldnt get it working.
 
 	AddEnemies();
 }
@@ -364,6 +369,7 @@ void World::SpawnEnemies()
 		SpawnPoint spawn = m_enemy_spawn_points.back();
 		std::unique_ptr<Aircraft> enemy(new Aircraft(spawn.m_type, m_textures, m_fonts, *m_audio));
 		enemy->setPosition(sf::Vector2f(spawn.m_x, spawn.m_y));
+		//fliped the rotation of the enemy to face down
 		enemy->setRotation(sf::degrees(0.f));
 		m_scene_layers[static_cast<int>(SceneLayers::kAir)]->AttachChild(std::move(enemy));
 		m_enemy_spawn_points.pop_back();
@@ -528,6 +534,7 @@ void World::HandleCollisions()
 	}
 }
 
+//johns code for destroying enemies outside rendered view.
 void World::DestroyEntitiesOutsideView()
 {
 	Command command;

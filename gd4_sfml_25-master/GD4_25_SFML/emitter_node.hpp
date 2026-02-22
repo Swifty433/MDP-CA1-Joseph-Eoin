@@ -1,3 +1,4 @@
+//emmiter node implementation this is johns code pulled from his github page.
 #pragma once
 #include "scene_node.hpp"
 #include "ParticleType.hpp"

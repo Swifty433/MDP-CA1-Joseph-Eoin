@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #include "state.hpp"
 #include "statestack.hpp"
 
@@ -9,6 +10,7 @@ State::~State()
 {
 }
 
+//added Audio_manager to the constructor so it can be used across states.
 State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, Player& player_2, Audio_Manager& audio) : window(&window), textures(&textures), fonts(&fonts), player(&player), player_2(&player_2), audio(&audio)
 {
 	

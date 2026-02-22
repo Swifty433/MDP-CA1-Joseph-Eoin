@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #pragma once
 #include "component.hpp"
 #include "resource_identifiers.hpp"
@@ -15,6 +16,7 @@ namespace gui
 		void SetText(const std::string& text);
 		void HandleEvent(const sf::Event& event) override;
 
+		// setting up the constructor for the getLocalBounds function.
 		virtual sf::FloatRect getLocalBounds() const override;
 
 	private:

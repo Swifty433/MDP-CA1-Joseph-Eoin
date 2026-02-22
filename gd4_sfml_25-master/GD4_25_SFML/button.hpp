@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #pragma once
 #include "component.hpp"
 #include "resource_identifiers.hpp"
@@ -13,7 +14,7 @@ namespace gui
 		typedef std::function<void()> Callback;
 
 	public:
-		Button(const FontHolder& fonts, const TextureHolder& textures, Audio_Manager& audio);
+		Button(const FontHolder& fonts, const TextureHolder& textures, Audio_Manager& audio); //audio manager added
 		void SetCallback(Callback callback);
 		void SetText(const std::string& text);
 		void SetToggle(bool flag);
@@ -25,6 +26,7 @@ namespace gui
 		virtual void Deactivate() override;
 		virtual void HandleEvent(const sf::Event& event) override;
 
+		// setting up the constructor for the getLocalBounds function.
 		virtual sf::FloatRect getLocalBounds() const override;
 
 	private:
@@ -39,6 +41,7 @@ namespace gui
 		sf::Text m_text;
 		bool m_is_toggle;
 
+		//reference to the audio manager for the button sound effects.
 		Audio_Manager* m_audio;
 	};
 }

@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #include "scene_node.hpp"
 #include "entity.hpp"
 #include "aircraft.hpp"
@@ -127,7 +128,9 @@ void SceneNode::DrawChildren(sf::RenderTarget& target, sf::RenderStates states) 
 
 unsigned int SceneNode::GetCategory() const
 {
-	return static_cast<unsigned int>(m_default_category);
+	// this was changed from "(ReceiverCategories::kScene);" to "(m_default_category)" as it was causing the double fire bug to the bullets.
+	// bug fix was found with the help of CoPilot, i believe the bug issue was to do with kScene being shared everywhere and the bullets being in kScene caused them to fire twice.
+	return static_cast<unsigned int>(m_default_category); 
 }
 
 void SceneNode::CheckNodeCollision(SceneNode& node, std::set<Pair>& collision_pairs)

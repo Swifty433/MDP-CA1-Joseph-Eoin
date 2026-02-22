@@ -1,3 +1,4 @@
+//edited by joseph byrne
 #pragma once
 #include "texture_id.hpp"
 #include "resource_holder.hpp"
@@ -10,6 +11,7 @@ namespace sf
 {
 	class Texture;
 	class Font;
+	//added the shader declaration to manage shaders same way font and textures are.
 	class Shader;
 }
 
@@ -17,4 +19,5 @@ namespace sf
 
 typedef ResourceHolder<TextureID, sf::Texture> TextureHolder;
 typedef ResourceHolder<FontID, sf::Font> FontHolder;
+//shader holder added to manage shaders in the way textures and fonts are managed
 typedef ResourceHolder<ShaderTypes, sf::Shader>  ShaderHolder;

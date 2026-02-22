@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #pragma once
 #include <memory>
 #include "resource_identifiers.hpp"
@@ -16,13 +17,14 @@ public:
 
 	struct Context
 	{
-		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, Player& player_2, Audio_Manager& audio);
+		Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player, Player& player_2, Audio_Manager& audio);// added the audio manager to the constructor
 		//TODO unique_ptr rather than raw pointers here?
 		sf::RenderWindow* window;
 		TextureHolder* textures;
 		FontHolder* fonts;
 		Player* player;
 		Player* player_2;
+		//added audio manager to the state context 
 		Audio_Manager* audio;
 	};
 

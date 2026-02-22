@@ -1,9 +1,11 @@
+//edited by joseph byrne
 #pragma once
 enum class Action
 {
 	//player 1 controls
 	kMoveLeft,
 	kMoveRight,
+	//players can no longer move up and down so these have been commented out for now!
 	//kMoveUp,
 	//kMoveDown,
 	kBulletFire,

@@ -1,8 +1,10 @@
+//edited by Joseph Byrne
 #include "label.hpp"
 #include "button.hpp"
 
 gui::Label::Label(const std::string& text, const FontHolder& font) : m_text(font.Get(FontID::kMain), text, 16)
 {
+	//changes the colour of the text to black.
     m_text.setFillColor(sf::Color::Black);
 }
 
@@ -22,6 +24,7 @@ void gui::Label::HandleEvent(const sf::Event& event)
 {
 }
 
+// returning the bound of the label.
 sf::FloatRect gui::Label::getLocalBounds() const
 {
     return m_text.getLocalBounds();

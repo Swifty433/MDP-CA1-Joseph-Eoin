@@ -1,3 +1,4 @@
+// post effect to apply a shader to a target - johns code from github
 #pragma once
 
 namespace sf

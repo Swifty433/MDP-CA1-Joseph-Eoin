@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #include "menu_state.hpp"
 #include "fontID.hpp"
 #include <SFML/Graphics/Text.hpp>
@@ -7,7 +8,7 @@
 
 MenuState::MenuState(StateStack& stack, Context context) : State(stack, context), m_background_sprite(context.textures->Get(TextureID::kTitleScreen))
 {
-    auto play_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio);
+	auto play_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio); //added the audio context to all the button constructors so they make a sound when clicked.
     play_button->setPosition(sf::Vector2f(100, 250));
     play_button->SetText("Play");
     play_button->SetCallback([this]()
@@ -16,7 +17,7 @@ MenuState::MenuState(StateStack& stack, Context context) : State(stack, context)
             RequestStackPush(StateID::kGame);
         });
 
-    auto settings_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio);
+    auto settings_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio); //added the audio context to all the button constructors so they make a sound when clicked.
     settings_button->setPosition(sf::Vector2f(100, 300));
     settings_button->SetText("Settings");
     settings_button->SetCallback([this]()
@@ -24,16 +25,17 @@ MenuState::MenuState(StateStack& stack, Context context) : State(stack, context)
             RequestStackPush(StateID::kSettings);
         });
 
-    auto exit_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio);
-    exit_button->setPosition(sf::Vector2f(100, 350));
+    auto exit_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio); //added the audio context to all the button constructors so they make a sound when clicked.
+    exit_button->setPosition(sf::Vector2f(100, 400));
     exit_button->SetText("Exit");
     exit_button->SetCallback([this]()
         {
             RequestStackPop();
         });
 
-	auto howto_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio);
-	howto_button->setPosition(sf::Vector2f(100, 400));
+    //added the how to play button, same as previous buttons but pushes the how to play menu instead.
+	auto howto_button = std::make_shared<gui::Button>(*context.fonts, *context.textures, *context.audio); //added the audio context to all the button constructors so they make a sound when clicked.
+	howto_button->setPosition(sf::Vector2f(100, 350));
 	howto_button->SetText("How To Play");
 	howto_button->SetCallback([this]()
 		{
@@ -43,6 +45,7 @@ MenuState::MenuState(StateStack& stack, Context context) : State(stack, context)
     m_gui_container.Pack(play_button);
     m_gui_container.Pack(settings_button);
     m_gui_container.Pack(exit_button);
+    //added the how to play button!
 	m_gui_container.Pack(howto_button); 
 }
 

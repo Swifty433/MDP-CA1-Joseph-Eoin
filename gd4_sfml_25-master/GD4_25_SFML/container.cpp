@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #include "container.hpp"
 
 gui::Container::Container() : m_selected_child(-1)
@@ -44,11 +45,12 @@ void gui::Container::HandleEvent(const sf::Event& event)
         }
     }
 
+	// Handle mouse events
     const auto* mouse_moved = event.getIf<sf::Event::MouseMoved>();
     if (mouse_moved)
     {
         sf::Vector2f mouse_pos(mouse_moved->position.x, mouse_moved->position.y);
-
+        //checking if the mouse is hovering over any child 
         for (std::size_t i = 0; i < m_children.size(); ++i)
         {
             if (m_children[i]->IsSelectable())
@@ -65,20 +67,23 @@ void gui::Container::HandleEvent(const sf::Event& event)
         }
     }
 
+	// Handle mouse button release events
 	const auto* mouse_button_released = event.getIf<sf::Event::MouseButtonReleased>();
     if (mouse_button_released && mouse_button_released->button == sf::Mouse::Button::Left)
     {
         sf::Vector2f mouse_pos(mouse_button_released->position.x, mouse_button_released->position.y);
-
+		//checking if the mouse is hovering over any child
         for (std::size_t i = 0; i < m_children.size(); ++i)
         {
             if (m_children[i]->IsSelectable())
             {
                 sf::FloatRect bounds = m_children[i]->getTransform().transformRect
                     (m_children[i]->getLocalBounds());
+
                 if (bounds.contains(mouse_pos))
                 {
                     Select(i);
+					//activate the selected child if the mouse button is released while hovering over it
                     m_children[i]->Activate();
                     break;
                 }
@@ -87,6 +92,7 @@ void gui::Container::HandleEvent(const sf::Event& event)
     }
 }
 
+//returning the bound of the container.
 sf::FloatRect gui::Container::getLocalBounds() const
 {
     return sf::FloatRect();

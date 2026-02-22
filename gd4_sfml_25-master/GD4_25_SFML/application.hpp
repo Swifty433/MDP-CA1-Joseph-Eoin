@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #pragma once
 #include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -26,6 +27,7 @@ private:
 
 	TextureHolder m_textures;
 	FontHolder m_fonts;
+	//added audio manager to the application class.
 	Audio_Manager m_audio;
 
 	StateStack m_stack;

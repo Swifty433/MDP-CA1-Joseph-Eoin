@@ -1,3 +1,4 @@
+//edited by Josph Byrne
 #include "data_tables.hpp"
 #include "aircraft_type.hpp"
 #include "projectile_type.hpp"
@@ -14,7 +15,9 @@ std::vector<AircraftData> InitializeAircraftData()
 	data[static_cast<int>(AircraftType::kEagle)].m_speed = 200.f;
 	data[static_cast<int>(AircraftType::kEagle)].m_fire_interval = sf::seconds(1);
 	data[static_cast<int>(AircraftType::kEagle)].m_texture = TextureID::kEagle;
+	//uses a texture rect for the roll animation of the player 1 ship
 	data[static_cast<int>(AircraftType::kEagle)].m_texture_rect = sf::IntRect({ 0, 0 }, { 64, 64 });
+	//added the roll animation for player 1 ship.
 	data[static_cast<int>(AircraftType::kEagle)].m_has_roll_animation = true;
 
 	//Enemies
@@ -28,6 +31,7 @@ std::vector<AircraftData> InitializeAircraftData()
 	data[static_cast<int>(AircraftType::kRaptor)].m_directions.emplace_back(Direction(+45.f, 80.f));
 	
 	//player 2 aircraft
+	//added player 2 ship type with same stats as player 1
 	data[static_cast<int>(AircraftType::kPlayer2Ship)].m_hitpoints = 100;
 	data[static_cast<int>(AircraftType::kPlayer2Ship)].m_speed = 200.f;
 	data[static_cast<int>(AircraftType::kPlayer2Ship)].m_fire_interval = sf::seconds(1);
@@ -75,6 +79,7 @@ std::vector<PickupData> InitializePickupData()
 	return data;
 }
 
+//partical data for the propellant and smoke particles of the aircraft, was unable to get working in the game so misiles do not have this implemented.
 std::vector<ParticleData> InitializeParticleData()
 {
 	std::vector<ParticleData> data(static_cast<int>(ParticleType::kParticleCount));

@@ -1,3 +1,4 @@
+//edited by joseph byrne
 #pragma once
 #include "statestack.hpp"
 #include <SFML/Graphics/Sprite.hpp>
@@ -15,6 +16,7 @@ public:
 
 private:
 	void UpdateLabels();
+	// added the x position so that player 2 controls could be moved the right side of the screen to seperate them from player 1 controls (no overlapping buttons now)
 	void AddButtonLabel(Action action, float y, float x, const std::string& text, Context context);
 
 private:

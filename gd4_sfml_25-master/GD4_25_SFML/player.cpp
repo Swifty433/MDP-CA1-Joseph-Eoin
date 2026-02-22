@@ -1,3 +1,4 @@
+//Edited by joseph byrne
 #include "player.hpp"
 #include "aircraft.hpp"
 #include <iostream>
@@ -172,6 +173,7 @@ bool Player::IsRealTimeAction(Action action)
     case Action::kMoveRight:
     case Action::kMoveLeftPlayer2:
     case Action::kMoveRightPlayer2:
+    //no up down movement so commented out
     //case Action::kMoveUp:
     //case Action::kMoveDown:
     case Action::kBulletFire:

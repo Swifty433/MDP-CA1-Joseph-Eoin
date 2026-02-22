@@ -1,3 +1,4 @@
+// Bloom effect implementation - this was taken from johns github page as it was done in class!
 #include "bloom_effect.hpp"
 #include "shader_types.hpp"
 

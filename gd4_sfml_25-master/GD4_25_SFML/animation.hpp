@@ -1,3 +1,4 @@
+// Animation class implementation. this was taken from johns github page as it was done in class!
 #pragma once
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>

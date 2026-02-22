@@ -1,3 +1,4 @@
+// Bloom effect implementation - this was taken from johns github page as it was done in class!
 #pragma once
 #include "posteffect.hpp"
 #include "resource_identifiers.hpp"

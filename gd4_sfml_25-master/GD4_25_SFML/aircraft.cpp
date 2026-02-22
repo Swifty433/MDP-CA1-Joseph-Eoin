@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #include "aircraft.hpp"
 #include "texture_id.hpp"
 #include "data_tables.hpp"
@@ -25,6 +26,7 @@ TextureID ToTextureID(AircraftType type)
 	case AircraftType::kRaptor:
 		return TextureID::kRaptor;
 		break;
+		//added the player 2 ship type.
 	case AircraftType::kPlayer2Ship:
 		return TextureID::kPlayer2Ship;
 		break;
@@ -32,7 +34,7 @@ TextureID ToTextureID(AircraftType type)
 	return TextureID::kEagle;
 }
 
-Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontHolder& fonts, Audio_Manager& audio) 
+Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontHolder& fonts, Audio_Manager& audio) //audio manager added to constructor
 	: Entity(Table[static_cast<int>(type)].m_hitpoints) 
 	, m_type(type) 
 	, m_sprite(textures.Get(Table[static_cast<int>(type)].m_texture))
@@ -49,10 +51,13 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	, m_missile_ammo(2)
 	, m_is_marked_for_removal(false)
 	, m_spawned_pickup(false)
+	//audio manager refrence
 	, m_audio(&audio)
+	//johns explosion animation code
 	, m_show_explosion(true)
 	,m_explosion(textures.Get(TextureID::kExplosion))
 {
+	//texture rect for the roll animation of the player ship.
 	if (Table[static_cast<int>(type)].m_has_roll_animation)
 	{
 		m_sprite.setTextureRect(Table[static_cast<int>(type)].m_texture_rect);
@@ -64,6 +69,7 @@ Aircraft::Aircraft(AircraftType type, const TextureHolder& textures, const FontH
 	m_resource_meter = 0.f;
 	m_spawn_enemy = false;
 
+	//Explosion animation set up
 	m_explosion.SetFrameSize(sf::Vector2i(256, 256));
 	m_explosion.SetNumFrames(16);
 	m_explosion.SetDuration(sf::seconds(1));
@@ -281,16 +287,19 @@ sf::FloatRect Aircraft::GetBoundingRect() const
 
 bool Aircraft::IsMarkedForRemoval() const
 {
+	//if the aircraft is destroyed and the explosion animation has finished, mark it for removal
 	if (IsDestroyed() && !m_is_marked_for_removal)
 	{
 		m_audio->play_sound(SoundEffects::kExplosion);
 		const_cast<Aircraft*>(this)->m_is_marked_for_removal = true;
 	}
+	//only remove the aircraft once the animation has finished
 	return IsDestroyed() && (m_explosion.IsFinished() || !m_show_explosion);
 }
 
 void Aircraft::DrawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	//draw explosion if destroyed, otherwise draw the aircraft sprite
 	if (IsDestroyed() && m_show_explosion)
 		target.draw(m_explosion, states);
 	else
@@ -302,6 +311,7 @@ void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 	if (IsDestroyed())
 	{
 		CheckPickupDrop(commands);
+		//m_explosion is updated after aircraft is destroyed, once the animation is finished the aircraft will be removed from the scene.
 		m_explosion.Update(dt);
 		return;
 	}
@@ -309,6 +319,7 @@ void Aircraft::UpdateCurrent(sf::Time dt, CommandQueue& commands)
 	UpdateTexts();
 	UpdateMovementPattern(dt);
 
+	//roll anim for player ship
 	UpdateRollAnimation();
 
 	//Check if bullets or missiles were fired
@@ -347,6 +358,7 @@ void Aircraft::CheckProjectileLaunch(sf::Time dt, CommandQueue& commands)
 	}
 }
 
+//checking if the aircraft is allied for player 1 and player 2
 bool Aircraft::IsAllied() const
 {
 	return m_type == AircraftType::kEagle || m_type == AircraftType::kPlayer2Ship;
@@ -359,6 +371,7 @@ void Aircraft::CreatePickup(SceneNode& node, const TextureHolder& textures)
 		auto type = static_cast<PickupType>(Utility::RandomInt(static_cast<int>(PickupType::kPickupCount)));
 		std::unique_ptr<Pickup> pickup(new Pickup(type, textures));
 		pickup->setPosition(GetWorldPosition());
+		//changed pickup velocity so the power ups move down the screen.
 		pickup->SetVelocity(0.f, 100.f);
 		node.AttachChild(std::move(pickup));
 	}
@@ -373,6 +386,7 @@ void Aircraft::CheckPickupDrop(CommandQueue& commands)
 	}
 }
 
+// roll animation for the player ship depending if the player is moving right or left - this code is from johns github page
 void Aircraft::UpdateRollAnimation()
 {
 	if (Table[static_cast<int>(m_type)].m_has_roll_animation)

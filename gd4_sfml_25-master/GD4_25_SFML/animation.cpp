@@ -1,3 +1,4 @@
+// Animation class implementation. this was taken from johns github page as it was done in class!
 #include "animation.hpp"
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>

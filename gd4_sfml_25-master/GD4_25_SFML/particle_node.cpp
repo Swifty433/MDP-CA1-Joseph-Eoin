@@ -1,3 +1,4 @@
+// particle node implementation file for handling the particles in the game - johns code from github
 #include "particle_node.hpp"
 #include "data_tables.hpp"
 #include <SFML/Graphics/RenderTarget.hpp>

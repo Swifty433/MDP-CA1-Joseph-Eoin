@@ -1,3 +1,4 @@
+//Particle node class for handling the particles in the game - johns code from github
 #pragma once
 #include "scene_node.hpp"
 #include "particletype.hpp"

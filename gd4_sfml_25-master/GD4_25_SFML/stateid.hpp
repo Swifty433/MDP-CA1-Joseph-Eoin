@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #pragma once
 enum class StateID
 {
@@ -8,5 +9,6 @@ enum class StateID
 	kPause,
 	kSettings,
 	kGameOver,
+	//added the how to play state to the enum class.
 	kHowTo
 };

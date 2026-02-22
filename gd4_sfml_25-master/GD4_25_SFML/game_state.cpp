@@ -1,3 +1,4 @@
+//edited by joseph byrne
 #include "game_state.hpp"
 #include "mission_status.hpp"
 
@@ -13,7 +14,7 @@ void GameState::Draw()
 
 bool GameState::Update(sf::Time dt)
 {
-
+	//similarly this is now redundant 
 	//if (!m_world.HasAlivePlayer())
 	//{
 	//	m_player.SetMissionStatus(MissionStatus::kMissionFailure);
@@ -26,6 +27,7 @@ bool GameState::Update(sf::Time dt)
 	//}
 
 	//checking to see who the winner is and then displaying the appropriate game over screen
+	//now we check if the game has ended and if it has we check who the winner was and set the mission status accordingly!
 	if (m_world.HasGameEnded())
 	{
 		int winner = m_world.GetWinner();

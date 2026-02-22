@@ -1,3 +1,4 @@
+// particle stuct for storing the particle data - johns code from github
 #pragma once
 #include "particletype.hpp"
 #include <SFML/System/Vector2.hpp>

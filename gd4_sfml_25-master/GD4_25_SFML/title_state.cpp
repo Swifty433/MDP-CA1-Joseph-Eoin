@@ -1,9 +1,11 @@
+//edited by Joseph Byrne
 #include "title_state.hpp"
 #include "fontID.hpp"
 #include "utility.hpp"
 
 TitleState::TitleState(StateStack& stack, Context context) : State(stack, context), m_show_text(true), m_text_effect_time(sf::Time::Zero), m_background_sprite(context.textures->Get(TextureID::kTitleScreen)), m_text(context.fonts->Get(FontID::kMain))
 {
+    //play the menu music when the title state is created.
 	context.audio->play_music(Music::kMenuMusic);
     m_text.setString("Press any button to continue");
     Utility::CentreOrigin(m_text);
@@ -42,9 +44,11 @@ bool TitleState::HandleEvent(const sf::Event& event)
         return true;
     }
     
+	// Handle mouse button press events
 	const auto* mouse_button_pressed = event.getIf<sf::Event::MouseButtonPressed>();
     if (mouse_button_pressed)
     {
+        //if the mouse is clicked now it also will switch to the menu like how it does when a key button is pressed.
         RequestStackPop();
 		RequestStackPush(StateID::kMenu);
         return true;

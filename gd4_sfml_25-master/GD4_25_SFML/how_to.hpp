@@ -1,9 +1,11 @@
+//Autored by Joseph Byrne 
 #pragma once
 #include "state.hpp"
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include "container.hpp"
 
+//class setup for the how to play menu.
 class HowToState : public State
 {
 public:
@@ -12,6 +14,7 @@ public:
 	virtual bool Update(sf::Time dt) override;
 	virtual bool HandleEvent(const sf::Event& event) override;
 
+// private memebers for the background, title text, how to play text and the back button.
 private:
 	sf::Sprite m_background_sprite;
 	sf::Text m_title_text;

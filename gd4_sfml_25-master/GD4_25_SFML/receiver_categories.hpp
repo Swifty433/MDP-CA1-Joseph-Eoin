@@ -1,3 +1,4 @@
+//edited by joseph byrne
 #pragma once
 enum class ReceiverCategories
 {
@@ -13,6 +14,7 @@ enum class ReceiverCategories
 	kAlliedProjectile = 1 << 6,
 	kEnemyProjectile = 1 << 7,
 	kPickup = 1 << 8,
+	//adjusted the bit shift to 9 to avoid overlap with the other categories - ***(a fix recommended by ChatGPT but couldnt get implementation of the particle system working)***
 	kParticleSystem = 1 << 9,
 
 	kAircraft = kPlayerAircraft | kAlliedAircraft | kEnemyAircraft,

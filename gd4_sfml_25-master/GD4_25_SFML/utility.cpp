@@ -1,3 +1,4 @@
+//edited by joseph Byrne
 #include "Utility.hpp"
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -39,6 +40,7 @@ void Utility::CentreOrigin(sf::Text& text)
     text.setOrigin(sf::Vector2f(std::floor(bounds.position.x + bounds.size.x / 2.f), std::floor(bounds.position.y + bounds.size.y / 2.f)));
 }
 
+// method added for explosion animation as it doesnt inherit from the sprite class but still needs to be centred.
 void Utility::CentreOrigin(Animation& animation)
 {
     sf::FloatRect bounds = animation.GetLocalBounds();

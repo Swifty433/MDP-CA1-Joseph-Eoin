@@ -1,3 +1,4 @@
+//emmiter node implementation this is johns code pulled from his github page.
 #include "emitter_node.hpp"
 
 EmitterNode::EmitterNode(ParticleType type)

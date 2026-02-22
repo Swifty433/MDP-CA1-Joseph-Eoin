@@ -1,3 +1,4 @@
+//edited by Joseph Byrne
 #include "application.hpp"
 #include "constants.hpp"
 #include "fontid.hpp"
@@ -9,7 +10,7 @@
 #include "game_over_state.hpp"
 #include "how_to.hpp"
 
-Application::Application() : m_window(sf::VideoMode({ 1024, 768 }), "States", sf::Style::Close), m_stack(State::Context(m_window, m_textures, m_fonts, m_player, m_player_2, m_audio))
+Application::Application() : m_window(sf::VideoMode({ 1024, 768 }), "States", sf::Style::Close), m_stack(State::Context(m_window, m_textures, m_fonts, m_player, m_player_2, m_audio)) // added the audio manager to the state context
 {
 	m_window.setKeyRepeatEnabled(false);
 	m_fonts.Load(FontID::kMain, "Media/Fonts/Sansation.ttf");
@@ -80,6 +81,7 @@ void Application::RegisterStates()
 	m_stack.RegisterState<PauseState>(StateID::kPause);
 	m_stack.RegisterState<SettingsState>(StateID::kSettings);
 	m_stack.RegisterState<GameOverState>(StateID::kGameOver);
+	//added the how to play state to the stack
 	m_stack.RegisterState<HowToState>(StateID::kHowTo);
 }
 

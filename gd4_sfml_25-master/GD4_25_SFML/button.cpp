@@ -1,15 +1,17 @@
+//edited by Joseph Byrne
 #include "button.hpp"
 #include "fontID.hpp"
 #include "utility.hpp"
 #include "audio_manager.hpp"
 
-gui::Button::Button(const FontHolder& fonts, const TextureHolder& textures, Audio_Manager& audio)
+gui::Button::Button(const FontHolder& fonts, const TextureHolder& textures, Audio_Manager& audio) //added the audio manager
     : m_normal_texture(textures.Get(TextureID::kButtonNormal))
     , m_selected_texture(textures.Get(TextureID::kButtonSelected))
     , m_activated_texture(textures.Get(TextureID::kButtonActivated))
     , m_text(fonts.Get(FontID::kMain), "", 16)
     , m_is_toggle(false)
     , m_sprite(textures.Get(TextureID::kButtonNormal))
+    //audio reference added 
     , m_audio(&audio)
 {
     sf::FloatRect bounds = m_sprite.getLocalBounds();
@@ -56,6 +58,7 @@ void gui::Button::Activate()
     {
         m_sprite.setTexture(m_activated_texture);
     }
+	//plays the sound when a button is clicked.
     m_audio->play_sound(SoundEffects::kButtonClick);
     if (m_callback)
     {
@@ -87,6 +90,7 @@ void gui::Button::HandleEvent(const sf::Event& event)
 {
 }
 
+//returns the bounds of the button to check if the mouse is hovering over it!
 sf::FloatRect gui::Button::getLocalBounds() const
 {
     return m_sprite.getLocalBounds();

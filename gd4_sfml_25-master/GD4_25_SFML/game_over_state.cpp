@@ -1,3 +1,4 @@
+//edited by joseph byrne
 #include "game_over_state.hpp"
 #include "utility.hpp"
 #include "constants.hpp"
@@ -8,7 +9,8 @@ GameOverState::GameOverState(StateStack& stack, Context context)
     , m_elapsed_time(sf::Time::Zero)
 {
     sf::Vector2f window_size(context.window->getSize());
-
+    
+	//this has become redundant and instead of showing mission success or failure we show which player won
     //if (context.player->GetMissionStatus() == MissionStatus::kMissionSuccess)
     //{
     //    m_game_over_text.setString("Mission Success");
@@ -20,6 +22,7 @@ GameOverState::GameOverState(StateStack& stack, Context context)
 
 
 	//new win state depending on which player won
+	//depending on who is left alive we set the status to be either player 1 wins or player 2 wins and display the text on screen accordingly
 	if (context.player->GetMissionStatus() == MissionStatus::kPlayer1Wins)
     {
         m_game_over_text.setString("Player 1 Wins!");
